@@ -1,17 +1,9 @@
-import koa from 'koa';
-import mount from 'koa-mount';
+import * as _App from './app';
+import * as _Hello from './helloWorld';
+import * as _User from './users/user';
 
-import routes from './routes';
+export const App = _App;
+export const Hello = _Hello;
+export const User = _User;
 
-import mongoose from 'mongoose';
-
-mongoose.connect('mongodb://localhost/backendProject', {
-  useNewUrlParser: true
-});
-mongoose.set('useCreateIndex', true);
-
-export const app = new koa();
-
-app.use(mount('/', routes));
-
-export default app;
+export default _App.app;

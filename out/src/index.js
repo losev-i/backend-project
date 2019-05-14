@@ -1,16 +1,16 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const koa_1 = __importDefault(require("koa"));
-const koa_mount_1 = __importDefault(require("koa-mount"));
-const routes_1 = __importDefault(require("./routes"));
-const mongoose_1 = __importDefault(require("mongoose"));
-mongoose_1.default.connect('mongodb://localhost/backendProject', {
-    useNewUrlParser: true
-});
-mongoose_1.default.set('useCreateIndex', true);
-exports.app = new koa_1.default();
-exports.app.use(koa_mount_1.default('/', routes_1.default));
-exports.default = exports.app;
+const _App = __importStar(require("./app"));
+const _Hello = __importStar(require("./helloWorld"));
+const _User = __importStar(require("./users/user"));
+exports.App = _App;
+exports.Hello = _Hello;
+exports.User = _User;
+exports.default = _App.app;
