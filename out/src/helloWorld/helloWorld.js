@@ -8,6 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @desc get request sets body to "Hello World"
+ * @param ctx context on get request
+ * @param next calling next middleware
+ */
 function get(ctx, next) {
     return __awaiter(this, void 0, void 0, function* () {
         ctx.body = 'Hello World!';
