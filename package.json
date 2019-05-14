@@ -4,7 +4,7 @@
   "description": "Backend server foundation.",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node out/bin/www.js",
+    "start": "tsc && node out/bin/www.ts",
     "watch": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./bin/www.ts",
     "test": "test"
   },
@@ -26,10 +26,12 @@
     "@types/lodash": "^4.14.126",
     "@types/mongoose": "^5.5.1",
     "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-mount": "^4.0.0",
     "koa-router": "^7.4.0",
     "mongoose": "^5.5.8",
     "pg": "^7.11.0",
+    "ts-node": "^8.1.0",
     "tsc": "^1.20150623.0",
     "typescript": "^3.4.5",
     "validator": "^10.11.0"

@@ -4,7 +4,7 @@ import mount from "koa-mount";
 import routes from "./routes";
 
 import mongoose from "mongoose";
-mongoose.connect("mongodb://localhost/backendProject", {
+mongoose.connect("mongodb://localhost/backend-project", {
   useNewUrlParser: true
 });
 mongoose.set("useCreateIndex", true);
