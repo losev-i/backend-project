@@ -1,0 +1,23 @@
+{
+  "name": "backend-project",
+  "version": "1.0.0",
+  "description": "Backend server foundation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/losev-i/backend-project.git"
+  },
+  "author": "Losev, Mund, Schwartz, Meister, Springer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/losev-i/backend-project/issues"
+  },
+  "homepage": "https://github.com/losev-i/backend-project#readme",
+  "dependencies": {
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.4.5"
+  }
+}
