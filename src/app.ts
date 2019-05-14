@@ -1,6 +1,5 @@
 import koa from 'koa';
 import mount from 'koa-mount';
-import mongoClient from 'mongodb';
 import {
 	graphql,
 	GraphQLSchema,
@@ -9,18 +8,14 @@ import {
 } from 'graphql';
 import routes from './routes';
 
-export const app = new koa();
+import mongoose from 'mongoose';
 
-const url = 'backend-project';
-
-mongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
-	if (err) {
-		throw err;
-	}
-
-	const database = client.db('backend-project');
-	const collection = database.collection('users');
+mongoose.connect('mongodb://localhost/backend-project', {
+	useNewUrlParser: true
 });
+mongoose.set('useCreateIndex', true);
+
+export const app = new koa();
 
 app.use(mount('/', routes));
 
