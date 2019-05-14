@@ -20,11 +20,11 @@
   "homepage": "https://github.com/losev-i/backend-project#readme",
   "dependencies": {
     "@types/koa-bodyparser": "^4.2.2",
-    "@types/koa-mount": "^3.0.1",
     "@types/mongoose": "^5.3.27",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
     "koa-bodyparser": "^4.2.1",
+    "koa-graphql": "^0.8.0",
     "koa-mount": "^4.0.0",
     "koa-router": "^7.4.0",
     "mongoose": "^5.5.4",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@types/koa": "^2.0.48",
+    "@types/koa-mount": "^3.0.1",
     "@types/koa-router": "^7.0.40",
     "nodemon": "^1.18.11",
     "ts-node": "^8.1.0",
