@@ -7,6 +7,10 @@ const koa_1 = __importDefault(require("koa"));
 const koa_bodyparser_1 = __importDefault(require("koa-bodyparser"));
 const koa_mount_1 = __importDefault(require("koa-mount"));
 const helloWorld_1 = __importDefault(require("./helloWorld"));
+const user_1 = __importDefault(require("./users/user"));
 const app = new koa_1.default();
-app.use(koa_bodyparser_1.default()).use(koa_mount_1.default('/', helloWorld_1.default));
+app
+    .use(koa_bodyparser_1.default())
+    .use(koa_mount_1.default('/', helloWorld_1.default))
+    .use(koa_mount_1.default('/user', user_1.default));
 exports.default = app;
