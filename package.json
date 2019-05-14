@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/losev-i/backend-project#readme",
   "dependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-router": "^7.0.40",
+    "@types/mongoose": "^5.5.1",
     "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.5.8",
     "tsc": "^1.20150623.0",
     "typescript": "^3.4.5"
   }
