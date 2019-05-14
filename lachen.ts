@@ -1,1 +1,1 @@
-let lachen = "hoho";
+let lachen = "hohohihi";
