@@ -6,16 +6,24 @@ import {
   Args,
   ResolverInterface,
   Arg,
+  Int,
   FieldResolver
 } from 'type-graphql';
 import { User } from './user.schema';
 import { createUserSample } from './user.sample';
 import { UserInput } from './user.input';
 import { plainToClass } from 'class-transformer';
-import * as _ from 'lodash';
+
+function removeByEmail(userList: User[], email: String) {
+  for (let i = 0; i < userList.length; i++) {
+    if (userList[i].email == email) {
+      userList.splice(i, 1);
+    }
+  }
+}
 
 @Resolver(of => User) //Was ist of?
-export class UserResolver implements ResolverInterface<User> {
+export class UserResolver {
   private readonly userList: User[] = createUserSample();
 
   @Query(returns => User)
@@ -43,7 +51,7 @@ export class UserResolver implements ResolverInterface<User> {
   @Mutation(returns => Boolean)
   async removeUser(@Arg('email') email: string) {
     try {
-      // await this.userList.removeByEmail  ---- Die Methode removeByEmail muss noch implementiert werden.
+      await removeByEmail(this.userList, email);
       return true;
     } catch {
       return false;

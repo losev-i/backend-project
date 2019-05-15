@@ -2,10 +2,10 @@
   "name": "backend-project",
   "version": "1.0.0",
   "description": "Backend server foundation.",
-  "main": "index.js",
+  "main": "www.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/app.ts",
+    "start": "nodemon ./out/bin/www.js",
     "watch-server": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/app.ts"
   },
   "repository": {
