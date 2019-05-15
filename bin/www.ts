@@ -1,4 +1,4 @@
-import app from "../src/index";
+import app from "../src/app";
 import _ from "lodash";
 
 async function start(options: { port?: number }) {
