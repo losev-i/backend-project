@@ -7,10 +7,12 @@ const koa_1 = __importDefault(require("koa"));
 const koa_mount_1 = __importDefault(require("koa-mount"));
 const routes_1 = __importDefault(require("./routes"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const koa_logger_1 = __importDefault(require("koa-logger"));
 mongoose_1.default.connect('mongodb://localhost/backend-project', {
     useNewUrlParser: true
 });
 mongoose_1.default.set('useCreateIndex', true);
 exports.app = new koa_1.default();
+exports.app.use(koa_logger_1.default());
 exports.app.use(koa_mount_1.default('/', routes_1.default));
 exports.default = exports.app;
