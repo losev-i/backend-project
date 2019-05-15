@@ -1,16 +1,16 @@
-import koa from "koa";
-import mount from "koa-mount";
+// import koa from "koa";
+// import mount from "koa-mount";
 
-import routes from "./routes";
+// import routes from "./routes";
 
-import mongoose from "mongoose";
-mongoose.connect("mongodb://localhost/backend-project", {
-  useNewUrlParser: true
-});
-mongoose.set("useCreateIndex", true);
+// import mongoose from "mongoose";
+// mongoose.connect("mongodb://localhost/backend-project", {
+//   useNewUrlParser: true
+// });
+// mongoose.set("useCreateIndex", true);
 
-export const app = new koa();
+// export const app = new koa();
 
-app.use(mount("/", routes));
+// app.use(mount("/", routes));
 
-export default app;
+// export default app;
