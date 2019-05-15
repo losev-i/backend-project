@@ -10,6 +10,7 @@ export interface IUser {
 
 export interface IUserModel extends IUser, Document {
 	fullName(): String;
+	//getUser(): ?;
 }
 
 export const UserSchema = new Schema({
@@ -40,8 +41,19 @@ export const UserSchema = new Schema({
 	}
 });
 
+/**
+ * Method for getting fullname of an user
+ */
 UserSchema.methods.fullName = function(): String {
 	return this.foreName.trim() + ' ' + this.sureName.trim();
+};
+
+/**
+ * Method for getting the user -> Welcher Rueckgabetyp ???
+ */
+UserSchema.methods.getUser = function(userName: String) {
+	const user = UserModel.find({ name: userName });
+	return user;
 };
 
 export const UserModel: Model<IUserModel> = model<IUserModel>(
