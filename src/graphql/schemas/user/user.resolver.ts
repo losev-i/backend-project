@@ -1,14 +1,5 @@
 import 'reflect-metadata';
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  ResolverInterface,
-  Arg,
-  Int,
-  FieldResolver
-} from 'type-graphql';
+import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { User } from './user.schema';
 import { createUserSample } from './user.sample';
 import { UserInput } from './user.input';
@@ -22,7 +13,7 @@ function removeByEmail(userList: User[], email: String) {
   }
 }
 
-@Resolver(of => User) //Was ist of?
+@Resolver(User) //Was ist of?
 export class UserResolver {
   private readonly userList: User[] = createUserSample();
 

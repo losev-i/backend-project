@@ -1,30 +1,17 @@
 import 'reflect-metadata';
-import { ObjectType, Field, Query, Resolver } from 'type-graphql';
+import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
 export class User {
-  constructor(
-    //Constructor ist definitiv wichtig
-    firstName: string,
-    lastName: string,
-    password: string,
-    email: string
-  ) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.password = password;
-    this.email = email;
-  }
+  @Field(type => ID)
+  firstName!: string;
 
   @Field()
-  firstName: string;
+  lastName!: string;
 
   @Field()
-  lastName: string;
+  password!: string;
 
   @Field()
-  password: string;
-
-  @Field()
-  email: string;
+  email!: string;
 }

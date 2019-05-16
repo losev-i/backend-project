@@ -6,7 +6,8 @@ async function start(options: { port?: number }) {
   await createConnection();
 
   options = _.defaults(options, { port: process.env.PORT || 3000 });
-  await app.listen(options, () => {
+  const instance = await app();
+  instance.listen(options, () => {
     console.log(`Server listening on http://localhost:${options.port}`);
   });
 }
