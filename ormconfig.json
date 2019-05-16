@@ -1,0 +1,9 @@
+{
+  "name": "default",
+  "type": "mongodb",
+  "host": "localhost",
+  "database": "backend-project",
+  "synchronize": true,
+  "logging": true,
+  "entities": ["src/graphql/entity/*.*"]
+}
