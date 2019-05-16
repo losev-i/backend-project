@@ -8,7 +8,7 @@ import {
   IUser,
   IUserModel,
   UserSchema
-} from "./users/user/user.model";
+} from "../users/user/user.model";
 import { ParameterizedContext } from "koa";
 
 const LocalStrategy = ls.Strategy;
