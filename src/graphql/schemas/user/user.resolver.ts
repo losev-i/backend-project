@@ -13,7 +13,7 @@ function removeByEmail(userList: User[], email: String) {
   }
 }
 
-@Resolver(User) //Was ist of?
+@Resolver(User)
 export class UserResolver {
   private readonly userList: User[] = createUserSample();
 
