@@ -9,7 +9,6 @@ import { RootSchema } from './graphql';
 export async function app() {
   const app = new koa();
   const schema = await RootSchema();
-  console.log(schema);
 
   app.use(
     mount(
