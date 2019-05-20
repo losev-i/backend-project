@@ -8,11 +8,5 @@ import login from './api/users/login';
 import user from './api/users/user';
 
 const app = new koa();
-app
-	.use(bodyparser())
-	.use(mount('/', home))
-	//.use(mount('/auth', auth))
-	.use(mount('/login', login))
-	.use(mount('/user', user));
-
+app.use(bodyparser());
 export default app;

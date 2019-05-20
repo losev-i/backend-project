@@ -1,31 +1,22 @@
 import koa from 'koa';
 import mount from 'koa-mount';
-import passport from 'koa-passport';
-import {
-	graphql,
-	GraphQLSchema,
-	GraphQLObjectType,
-	GraphQLString
-} from 'graphql';
-import routes from './routes';
-
-import mongoose from 'mongoose';
 import logger from 'koa-logger';
-import { IUser, UserSchema } from './api/users/user/user.model';
+const graphqlHTTP = require('koa-graphql');
+import { RootSchema } from './graphql';
 
-mongoose.connect('mongodb://localhost/backend-project', {
-	useNewUrlParser: true
-});
-mongoose.set('useCreateIndex', true);
+export async function app() {
+	const app = new koa();
+	const schema = await RootSchema();
 
-export const app = new koa();
+	app.use(logger()).use(
+		mount(
+			'/graphql',
+			graphqlHTTP({
+				schema,
+				graphiql: process.env.NODE_ENV !== 'production'
+			})
+		)
+	);
 
-app.keys = ['secret-keys'];
-
-app
-	.use(logger())
-	.use(mount('/', routes))
-	.use(passport.initialize())
-	.use(passport.session());
-
-export default app;
+	return app;
+}
