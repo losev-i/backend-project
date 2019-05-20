@@ -14,7 +14,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ava_1 = __importDefault(require("ava"));
 const path_1 = __importDefault(require("path"));
 const proxyquire_1 = __importDefault(require("proxyquire"));
-const sinon_1 = require("sinon");
 const bson_1 = require("bson");
 const pathMock = {
     join: (...args) => {
@@ -56,16 +55,4 @@ const UserModelImport = {
     default: UserModelMock,
     UserModel: UserModelMock
 };
-ava_1.default('fn auth.login', (t) => __awaiter(this, void 0, void 0, function* () {
-    const newId = new bson_1.ObjectId();
-    const ctx = {
-        body: null,
-        request: { body: users[0] }
-    };
-    const userPostStub = sinon_1.stub(UserModelMock, 'create').returns(Promise.resolve(Object.assign({}, users[0], { _id: newId })));
-    const next = sinon_1.stub().returns(Promise.resolve());
-    yield auth.login();
-    t.truthy(userPostStub.calledWithExactly(users[0]));
-    t.deepEqual(ctx.body, Object.assign({}, users[0], { _id: newId }));
-    t.truthy(next.calledOnce);
-}));
+ava_1.default('fn auth.get', (t) => __awaiter(this, void 0, void 0, function* () { }));

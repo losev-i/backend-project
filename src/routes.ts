@@ -11,7 +11,7 @@ const app = new koa();
 app
 	.use(bodyparser())
 	.use(mount('/', home))
-	.use(mount('/auth', auth))
+	//.use(mount('/auth', auth))
 	.use(mount('/login', login))
 	.use(mount('/user', user));
 

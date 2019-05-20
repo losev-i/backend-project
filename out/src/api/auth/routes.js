@@ -14,5 +14,4 @@ const koa_router_1 = __importDefault(require("koa-router"));
 const auth = __importStar(require("./auth"));
 const router = new koa_router_1.default();
 router.get('/', auth.get);
-router.get('/login', auth.login);
 exports.default = router;
