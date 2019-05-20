@@ -29,6 +29,7 @@ export async function get(ctx: ParameterizedContext, next: Function) {
   await next();
 }
 
+//TODO: in eine Funktion packen
 app.use(passport.initialize());
 app.use(passport.session());
 
