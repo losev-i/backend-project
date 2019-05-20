@@ -8,13 +8,12 @@ import { RootSchema } from './graphql';
 
 export async function app() {
   const app = new koa();
-  const schema = await RootSchema();
 
   app.use(
     mount(
       '/graphql',
       graphqlHTTP({
-        schema,
+        schema: await RootSchema(),
         graphiql: process.env.NODE_ENV !== 'production'
       })
     )
