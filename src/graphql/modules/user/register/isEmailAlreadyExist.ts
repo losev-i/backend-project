@@ -4,21 +4,31 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface
 } from 'class-validator';
-import { User } from '../../../entity/User';
+import { User } from '../User';
+import { getRepository } from 'typeorm';
 
+/**
+ * Validator class (Decorator)
+ */
 @ValidatorConstraint({ async: true })
 export class IsEmailAlreadyExistConstraint
   implements ValidatorConstraintInterface {
+  /**
+   * Checks if email exists in database
+   * @param email The email that is to be searched for
+   */
   validate(email: string) {
-    return User.findOne({ where: { email } }).then(user => {
-      if (user) {
-        return false;
-      }
+    if (getRepository(User).findOne({ email: email })) {
       return true;
-    });
+    }
+    return false;
   }
 }
 
+/**
+ * Exports the decorator
+ * @param ValidationOptions
+ */
 export function IsEmailAlreadyExist(ValidationOptions?: ValidationOptions) {
   return function(object: Object, propertyName: string) {
     registerDecorator({
