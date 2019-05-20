@@ -1,7 +1,7 @@
+import 'reflect-metadata';
 import { Resolver, Query, Arg } from 'type-graphql';
 import { User } from '../../../entity/User';
 import { getRepository, Repository } from 'typeorm';
-import { isNullableType } from 'graphql';
 
 @Resolver()
 export class FindResolver {
