@@ -3,12 +3,7 @@ import passport from "koa-passport";
 import bodyparser from "koa-bodyparser";
 import ls from "passport-local";
 import app from "./index";
-import {
-  UserModel,
-  IUser,
-  IUserModel,
-  UserSchema
-} from "../users/user/user.model";
+import { IUser, UserSchema } from "../users/user/user.model";
 import { ParameterizedContext } from "koa";
 
 const LocalStrategy = ls.Strategy;
@@ -23,47 +18,45 @@ export async function get(ctx: ParameterizedContext, next: Function) {
       errors: [{ title: "Login required", status: 401 }]
     };
   }
-  // await ctx.login();
+  await ctx.login();
   // ctx.logout();
   // ctx.state.user;
   await next();
 }
 
-//TODO: in eine Funktion packen
-app.use(passport.initialize());
-app.use(passport.session());
+export async function login() {
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-passport.serializeUser((user: IUser, done) => {
-  done(null, { username: user.userName });
-});
+  passport.serializeUser((user: IUser, done) => {
+    done(null, { username: user.userName });
+  });
 
-passport.deserializeUser(async (user, done) => {
-  done(null, user);
-});
+  passport.deserializeUser(async (user, done) => {
+    done(null, user);
+  });
 
-const options = {
-  userNameField: "user[email]",
-  passwordField: "user[password]"
-};
+  const options = {
+    userNameField: "user[email]",
+    passwordField: "user[password]"
+  };
 
-passport.use(
-  new LocalStrategy(options, (userName, password, done) => {
-    () => {
-      try {
-        const user = UserSchema.methods.getUser(userName);
-        if (user.userName === userName && user.password === password) {
-          return user;
-        } else {
+  passport.use(
+    new LocalStrategy(options, (userName, password, done) => {
+      () => {
+        try {
+          const user = UserSchema.methods.getUser(userName);
+          if (user.userName === userName && user.password === password) {
+            return user;
+          } else {
+            return null;
+          }
+        } catch (e) {
           return null;
         }
-      } catch (e) {
-        return null;
-      }
-      // })
-      // .then((user: IUser) => {
-      // 	done(null, user);
-    };
-  })
-);
+      };
+    })
+  );
+}
 
 export default passport;
