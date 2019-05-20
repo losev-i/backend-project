@@ -14,9 +14,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ava_1 = __importDefault(require("ava"));
 const path_1 = __importDefault(require("path"));
 const proxyquire_1 = __importDefault(require("proxyquire"));
-// import supertest from 'supertest';
 const sinon_1 = require("sinon");
-const auth_1 = __importDefault(require("./auth"));
+const bson_1 = require("bson");
 const pathMock = {
     join: (...args) => {
         return path_1.default.join(...args);
@@ -25,13 +24,48 @@ const pathMock = {
 const auth = proxyquire_1.default('./auth', {
     path: pathMock
 });
-const user = {
-    userName: 'inna',
-    passport: 'topsecret'
+const users = [
+    {
+        userName: 'inna',
+        firstName: 'Inna',
+        email: 'il@web.de',
+        lastName: 'Losev',
+        password: 'aaaa'
+    },
+    {
+        userName: 'lena',
+        firstName: 'Lena',
+        email: 'lm@web.de',
+        lastName: 'Mund',
+        password: 'bbbb'
+    }
+];
+const UserModelMock = {
+    find: function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            return users;
+        });
+    },
+    create: function (user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Object.assign({}, user, { _id: new bson_1.ObjectId() });
+        });
+    }
+};
+const UserModelImport = {
+    default: UserModelMock,
+    UserModel: UserModelMock
 };
 ava_1.default('fn auth.login', (t) => __awaiter(this, void 0, void 0, function* () {
-    const joinSpy = sinon_1.spy(pathMock, 'join');
-    const pathHome = path_1.default.resolve(__dirname);
-    yield auth.login(() => Promise.resolve());
-    t.truthy(joinSpy.calledWith(auth_1.default.initialize()));
+    const newId = new bson_1.ObjectId();
+    const ctx = {
+        body: null,
+        request: { body: users[0] }
+    };
+    const userPostStub = sinon_1.stub(UserModelMock, 'create').returns(Promise.resolve(Object.assign({}, users[0], { _id: newId })));
+    const next = sinon_1.stub().returns(Promise.resolve());
+    yield auth.login();
+    t.truthy(userPostStub.calledWithExactly(users[0]));
+    t.deepEqual(ctx.body, Object.assign({}, users[0], { _id: newId }));
+    t.truthy(next.calledOnce);
 }));

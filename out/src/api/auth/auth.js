@@ -22,7 +22,7 @@ function get(ctx, next) {
             yield next();
         }
         else {
-            // ctx.isUnauthenticated();
+            ctx.isUnauthenticated();
             ctx.status = 401;
             ctx.body = {
                 errors: [{ title: 'Login required', status: 401 }]
@@ -68,4 +68,4 @@ function login() {
     });
 }
 exports.login = login;
-exports.default = koa_passport_1.default;
+// export default passport;

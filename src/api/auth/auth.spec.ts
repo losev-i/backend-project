@@ -1,10 +1,11 @@
 import test from 'ava';
 import path from 'path';
 import proxyquire from 'proxyquire';
-// import supertest from 'supertest';
-import { spy } from 'sinon';
+import supertest from 'supertest';
+import { spy, stub } from 'sinon';
 import { ParameterizedContext, Context } from 'koa';
-import passport from './auth';
+import { IUser } from '../users/user/user.model';
+import { ObjectId } from 'bson';
 
 const pathMock = {
 	join: (...args: any[]) => {
@@ -16,16 +17,53 @@ const auth = proxyquire('./auth', {
 	path: pathMock
 });
 
-const user = {
-	userName: 'inna',
-	passport: 'topsecret'
+const users = [
+	{
+		userName: 'inna',
+		firstName: 'Inna',
+		email: 'il@web.de',
+		lastName: 'Losev',
+		password: 'aaaa'
+	},
+	{
+		userName: 'lena',
+		firstName: 'Lena',
+		email: 'lm@web.de',
+		lastName: 'Mund',
+		password: 'bbbb'
+	}
+];
+
+const UserModelMock = {
+	find: async function() {
+		return users;
+	},
+	create: async function(user: IUser) {
+		return { ...user, _id: new ObjectId() };
+	}
+};
+
+const UserModelImport = {
+	default: UserModelMock,
+	UserModel: UserModelMock
 };
 
 test('fn auth.login', async t => {
-	const joinSpy = spy(pathMock, 'join');
-	const pathHome = path.resolve(__dirname);
+	const newId = new ObjectId();
+	const ctx: { body: any; request: { body: any } } = {
+		body: null,
+		request: { body: users[0] }
+	};
 
-	await auth.login(() => Promise.resolve());
+	const userPostStub = stub(UserModelMock, 'create').returns(
+		Promise.resolve({ ...users[0], _id: newId })
+	);
 
-	t.truthy(joinSpy.calledWith(passport.initialize()));
+	const next = stub().returns(Promise.resolve());
+
+	await auth.login();
+
+	t.truthy(userPostStub.calledWithExactly(users[0]));
+	t.deepEqual(ctx.body, { ...users[0], _id: newId });
+	t.truthy(next.calledOnce);
 });

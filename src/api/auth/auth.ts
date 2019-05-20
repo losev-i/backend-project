@@ -12,7 +12,7 @@ export async function get(ctx: ParameterizedContext, next: Function) {
 	if (ctx.isAuthenticated()) {
 		await next();
 	} else {
-		// ctx.isUnauthenticated();
+		ctx.isUnauthenticated();
 		ctx.status = 401;
 		ctx.body = {
 			errors: [{ title: 'Login required', status: 401 }]
@@ -32,7 +32,7 @@ export async function login() {
 		done(null, { username: user.userName });
 	});
 
-	passport.deserializeUser(async (user, done) => {
+	passport.deserializeUser(async (user: IUser, done) => {
 		done(null, user);
 	});
 
@@ -59,4 +59,4 @@ export async function login() {
 	);
 }
 
-export default passport;
+// export default passport;
