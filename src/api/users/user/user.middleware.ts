@@ -1,6 +1,5 @@
 import { ParameterizedContext } from 'koa';
 import UserModel, { IUser } from './user.model';
-import passport from 'koa-passport';
 
 export async function get(ctx: ParameterizedContext, next: () => Promise<any>) {
   await next();
@@ -27,14 +26,6 @@ export async function post(
       errors: [{ title: 'error on username or password', status: 401 }]
     };
   }
-
-  passport.serializeUser((user: IUser, done) => {
-    done(null, { username: user.userName });
-  });
-
-  passport.deserializeUser(async (user, done) => {
-    done(null, user);
-  });
 
   ctx.redirect('/');
   await next();

@@ -2,8 +2,6 @@ import koa from 'koa';
 import mount from 'koa-mount';
 import mongoose from 'mongoose';
 import logger from 'koa-logger';
-import session from 'koa-session-ts';
-import passport from 'koa-passport';
 
 import routes from './routes';
 
@@ -16,11 +14,6 @@ export const app = new koa();
 
 app.keys = ['secret-keys'];
 
-app
-  .use(mount('/', routes))
-  .use(logger())
-  .use(session())
-  .use(passport.initialize())
-  .use(passport.session());
+app.use(mount('/', routes)).use(logger());
 
 export default app;
