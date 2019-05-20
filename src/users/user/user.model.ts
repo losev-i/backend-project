@@ -4,13 +4,13 @@ export interface IUser {
   userName: String;
   password: String;
   email: String;
-  foreName: String;
-  sureName: String;
+  firstName: String;
+  lastName: String;
 }
 
 export interface IUserModel extends IUser, Document {
   fullName(): String;
-  //getUser(): ?;
+  getUser(): IUser;
 }
 
 export const UserSchema = new Schema({
@@ -21,11 +21,11 @@ export const UserSchema = new Schema({
     minlength: 5,
     maxlength: 20
   },
-  foreName: {
+  firstName: {
     type: String,
     required: true
   },
-  sureName: {
+  lastName: {
     type: String,
     required: true
   },
@@ -45,7 +45,7 @@ export const UserSchema = new Schema({
  * Method for getting fullname of an user
  */
 UserSchema.methods.fullName = function(): String {
-  return this.foreName.trim() + " " + this.sureName.trim();
+  return this.firstName.trim() + " " + this.lastName.trim();
 };
 
 /**
