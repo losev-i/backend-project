@@ -1,11 +1,19 @@
 import 'reflect-metadata';
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
-import { User } from '../../../entity/User';
+import { User } from '../User';
 import * as bcrypt from 'bcryptjs';
 import { LoginInput } from './LoginInput';
 
+/**
+ * Resolver class
+ */
 @Resolver()
 export class LoginResolver {
+  /**
+   * Login mutation
+   * Has to be extended to include permissions etc. (?)
+   * @returns null if user credentials are invalid, else User object
+   */
   @Mutation(() => User, { nullable: true })
   async login(@Arg('data')
   {
