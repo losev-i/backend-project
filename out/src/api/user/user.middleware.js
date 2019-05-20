@@ -20,3 +20,4 @@ function post(ctx, next) {
     });
 }
 exports.post = post;
+//# sourceMappingURL=user.middleware.js.map

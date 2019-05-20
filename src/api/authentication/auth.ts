@@ -1,38 +1,55 @@
-const passport = require('koa-passport');
-const LocalStrategy = require('passport-local').Strategy;
+import passport from 'koa-passport';
+//import session from 'koa-session';
+import ls from 'passport-local';
+import {
+  UserModel,
+  IUser,
+  IUserModel,
+  UserSchema
+} from '../users/user/user.model';
+import { ParameterizedContext } from 'koa';
 
-const fetchUser = (() => {
-  const user = { id: 1, username: 'test', password: 'test' };
-  return async () => {
-    return user;
-  };
-})();
+const LocalStrategy = ls.Strategy;
 
-passport.serializeUser((user: any, done: any) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id: any, done: any) => {
-  try {
-    const user = await fetchUser();
-    done(null, user);
-  } catch (err) {
-    done(err);
+export async function get(ctx: ParameterizedContext, next: Function) {
+  if (ctx.isAuthenticated()) {
+    await next();
+  } else {
+    // ctx.isUnauthenticated();
+    ctx.status = 401;
+    ctx.body = {
+      errors: [{ title: 'Login required', status: 401 }]
+    };
   }
-});
+  // await ctx.login();
+  // ctx.logout();
+  // ctx.state.user;
+  await next();
+}
+
+const options = {
+  userNameField: 'user[email]',
+  passwordField: 'user[password]'
+};
 
 passport.use(
-  new LocalStrategy((username: any, password: any, done: any) => {
-    fetchUser()
-      .then(user => {
-        if (username === user.username && password === user.password) {
-          done(null, user);
+  new LocalStrategy(options, (userName, password, done) => {
+    () => {
+      try {
+        const user = UserSchema.methods.getUser(userName);
+        if (user.userName === userName && user.password === password) {
+          return user;
         } else {
-          done(null, false);
+          return null;
         }
-      })
-      .catch(err => {
-        done(err);
-      });
+      } catch (e) {
+        return null;
+      }
+      // })
+      // .then((user: IUser) => {
+      // 	done(null, user);
+    };
   })
 );
+
+export default passport;

@@ -25,3 +25,4 @@ ava_1.default('fn helloWorld.get', (t) => __awaiter(this, void 0, void 0, functi
     yield hello.get(ctxMock, () => Promise.resolve());
     t.is(ctxMock.body, 'Hello World!');
 }));
+//# sourceMappingURL=helloWorld.spec.js.map

@@ -15,3 +15,4 @@ const helloWorld = __importStar(require("./helloWorld"));
 exports.router = new koa_router_1.default();
 exports.router.get('/', helloWorld.get);
 exports.default = exports.router;
+//# sourceMappingURL=routes.js.map

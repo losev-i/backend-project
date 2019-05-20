@@ -9,3 +9,4 @@ exports.app = new koa_1.default();
 exports.app.use(routes_1.default.routes());
 exports.router = routes_1.default;
 exports.default = exports.app;
+//# sourceMappingURL=index.js.map

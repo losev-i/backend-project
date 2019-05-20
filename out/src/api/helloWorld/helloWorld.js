@@ -20,3 +20,4 @@ function get(ctx, next) {
     });
 }
 exports.get = get;
+//# sourceMappingURL=helloWorld.js.map

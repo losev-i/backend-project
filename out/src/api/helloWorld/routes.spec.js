@@ -35,3 +35,4 @@ _test('GET: /', (t) => __awaiter(this, void 0, void 0, function* () {
     const result = yield request.get('/').expect(200);
     t.is(result.type, 'text/plain');
 }));
+//# sourceMappingURL=routes.spec.js.map
