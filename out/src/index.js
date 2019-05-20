@@ -9,7 +9,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const _App = __importStar(require("./app"));
 const _Home = __importStar(require("./api/home"));
-const _User = __importStar(require("./api/users"));
+const _User = __importStar(require("./api/users/user"));
 exports.App = _App;
 exports.Home = _Home;
 exports.User = _User;
