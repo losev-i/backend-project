@@ -1,8 +1,10 @@
+import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
-import { UserResolver } from './schemas/user/user.resolver';
+import { RegisterResolver } from './modules/user/Register';
+import { FindResolver } from './modules/user/find/Find';
 
 export async function RootSchema() {
   return await buildSchema({
-    resolvers: [UserResolver]
+    resolvers: [RegisterResolver, FindResolver]
   });
 }
