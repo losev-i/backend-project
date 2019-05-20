@@ -1,9 +1,9 @@
-import Router from "koa-router";
+// import Router from "koa-router";
 
-import * as helloWorld from "./helloWorld";
+// import * as helloWorld from "./helloWorld";
 
-export const router = new Router();
+// export const router = new Router();
 
-router.get("/", helloWorld.get);
+// router.get("/", helloWorld.get);
 
-export default router;
+// export default router;

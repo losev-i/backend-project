@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && node out/bin/www.ts",
     "watch": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./bin/www.ts",
-    "test": "test && ava"
+    "test": "tsc && ava --verbose"
   },
   "repository": {
     "type": "git",
