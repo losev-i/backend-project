@@ -1,6 +1,6 @@
 import * as _App from './app';
-import * as _Hello from './helloWorld';
-import * as _User from './users/user';
+import * as _Hello from './api/helloWorld';
+import * as _User from './api/user';
 
 export const App = _App;
 export const Hello = _Hello;

@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const koa_1 = __importDefault(require("koa"));
 const koa_bodyparser_1 = __importDefault(require("koa-bodyparser"));
 const koa_mount_1 = __importDefault(require("koa-mount"));
-const helloWorld_1 = __importDefault(require("./helloWorld"));
-const user_1 = __importDefault(require("./users/user"));
+const helloWorld_1 = __importDefault(require("./api/helloWorld"));
+const user_1 = __importDefault(require("./api/user"));
 const app = new koa_1.default();
 app
     .use(koa_bodyparser_1.default())
