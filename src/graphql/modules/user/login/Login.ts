@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
-import { User } from '../User';
+import { User } from '../../../entities/User';
 import * as bcrypt from 'bcryptjs';
 import { LoginInput } from './LoginInput';
+import { getRepository } from 'typeorm';
 
 /**
  * Resolver class
@@ -20,7 +21,7 @@ export class LoginResolver {
     email,
     password
   }: LoginInput): Promise<User | null> {
-    const user = await User.findOne({ where: { email } });
+    const user = await getRepository(User).findOne({ email: email });
 
     if (!user) {
       return null;

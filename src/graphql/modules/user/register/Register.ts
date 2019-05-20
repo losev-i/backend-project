@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query } from 'type-graphql';
 import * as bcrypt from 'bcryptjs';
 
-import { User } from '../User';
+import { User } from '../../../entities/User';
 import { RegisterInput } from './RegisterInput';
 
 /**

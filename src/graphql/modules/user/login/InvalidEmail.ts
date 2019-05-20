@@ -4,7 +4,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface
 } from 'class-validator';
-import { User } from '../User';
+import { User } from '../../../entities/User';
 import { getRepository } from 'typeorm';
 
 /**

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Resolver, Query, Arg } from 'type-graphql';
-import { User } from '../User';
+import { User } from '../../../entities/User';
 import { getRepository } from 'typeorm';
 
 /**
