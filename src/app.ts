@@ -1,18 +1,19 @@
 import koa from 'koa';
 import mount from 'koa-mount';
-import logger from 'koa-logger';
 const graphqlHTTP = require('koa-graphql');
+// import routes from './routes';
+// import { GraphQLSchema, GraphQLObjectType, GraphQLList } from 'graphql';
 import { RootSchema } from './graphql';
+// import { User } from './graphql/entity/User';
 
 export async function app() {
 	const app = new koa();
-	const schema = await RootSchema();
 
-	app.use(logger()).use(
+	app.use(
 		mount(
 			'/graphql',
 			graphqlHTTP({
-				schema,
+				schema: await RootSchema(),
 				graphiql: process.env.NODE_ENV !== 'production'
 			})
 		)
