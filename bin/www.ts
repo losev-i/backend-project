@@ -1,6 +1,6 @@
-import app from "../src/index";
-import _ from "lodash";
-import { createConnection } from "typeorm";
+import app from '../src/index';
+import _ from 'lodash';
+import { createConnection } from 'typeorm';
 
 async function start(options: { port?: number }) {
   await createConnection();
@@ -11,5 +11,6 @@ async function start(options: { port?: number }) {
     console.log(`Server listening on http://localhost:${options.port}`);
   });
 }
-
+//abc
 start({});
+1;
