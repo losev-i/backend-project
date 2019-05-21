@@ -14,7 +14,6 @@ export class FindResolver {
    */
   @Query(returns => User, { nullable: true })
   async findByEmail(@Arg("email", type => String) email: string) {
-    // return await getRepository(User).findOne({ email: email });
     return await User.findOne({ email: email });
   }
 
