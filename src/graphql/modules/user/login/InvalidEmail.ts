@@ -3,9 +3,8 @@ import {
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface
-} from "class-validator";
-import { User } from "../../../entities/User";
-import { getRepository } from "typeorm";
+} from 'class-validator';
+import { User } from '../../../entities/User';
 
 /**
  * Validator class (Decorator)
@@ -18,10 +17,10 @@ export class InvalidEmailConstraint implements ValidatorConstraintInterface {
    * @returns boolean
    */
   validate(email: string) {
-    if (getRepository(User).findOne({ email: email })) {
-      return true;
+    if (User.findOne({ email: email.toLowerCase() })) {
+      return false;
     }
-    return false;
+    return true;
   }
 }
 /**

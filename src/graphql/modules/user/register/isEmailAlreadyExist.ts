@@ -3,8 +3,8 @@ import {
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface
-} from "class-validator";
-import { User } from "../../../entities/User";
+} from 'class-validator';
+import { User } from '../../../entities/User';
 
 /**
  * Validator class (Decorator)
@@ -18,9 +18,9 @@ export class IsEmailAlreadyExistConstraint
    */
   validate(email: string) {
     if (User.findOne({ email: email.toLowerCase() })) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 }
 
