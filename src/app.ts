@@ -1,19 +1,23 @@
 import koa from 'koa';
 import mount from 'koa-mount';
-import mongoose from 'mongoose';
-import logger from 'koa-logger';
+const graphqlHTTP = require('koa-graphql');
+// import routes from './routes';
+// import { GraphQLSchema, GraphQLObjectType, GraphQLList } from 'graphql';
+import { RootSchema } from './graphql';
+// import { User } from './graphql/entity/User';
 
-import routes from './routes';
+export async function app() {
+  const app = new koa();
 
-mongoose.connect('mongodb://localhost/backendProject', {
-  useNewUrlParser: true
-});
-mongoose.set('useCreateIndex', true);
+  app.use(
+    mount(
+      '/graphql',
+      graphqlHTTP({
+        schema: await RootSchema(),
+        graphiql: process.env.NODE_ENV !== 'production'
+      })
+    )
+  );
 
-export const app = new koa();
-
-app.keys = ['secret-keys'];
-
-app.use(mount('/', routes)).use(logger());
-
-export default app;
+  return app;
+}
