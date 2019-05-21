@@ -1,0 +1,28 @@
+<form method="post" action="result">
+  <input type="checkbox" name="loves" value="book">book
+  <input type="checkbox" name="loves" value="music">music
+  <input type="checkbox" name="loves" value="game">game
+  <input type="submit">
+</form>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+<script>
+  var data = {
+    name:'kid',
+    age:18,
+    is_engineer:true,
+    car:null,
+    pet:{
+      name:'mimi',
+      age:3
+    },
+    skills:[
+      { name:'web', level:10 },
+      { name:'ps', level:9.5 },
+      { name:'ps', level:9.5 }
+    ]
+  }
+  $.post('result', data, function(data){
+    console.log(data)
+  })
+</script>
