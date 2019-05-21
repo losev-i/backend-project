@@ -8,17 +8,6 @@ import { getRepository } from "typeorm";
  */
 @Resolver()
 export class FindResolver {
-<<<<<<< HEAD:src/graphql/modules/user/find/Find.ts
-	/**
-	 * Query which finds User via given email
-	 * @param email Search criterion
-	 * @returns User object that matches criterion
-	 */
-	@Query(returns => User, { nullable: true })
-	async findByEmail(@Arg('email', type => String) email: string) {
-		return await getRepository(User).findOne({ email: email });
-	}
-=======
   /**
    * Query which finds User via given email
    * @param email Search criterion
@@ -28,7 +17,6 @@ export class FindResolver {
   async findByEmail(@Arg("email", type => String) email: string) {
     return await getRepository(User).findOne({ email: email });
   }
->>>>>>> origin/LM-1202:src/graphql/modules/user/find/FindResolver.ts
 
 	/**
 	 * Query which finds all Users
