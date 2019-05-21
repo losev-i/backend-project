@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { Resolver, Query, Arg } from "type-graphql";
 import { User } from "../../../entities/User";
-import { getRepository } from "typeorm";
 
 /**
  * Resolver class
@@ -15,7 +14,8 @@ export class FindResolver {
    */
   @Query(returns => User, { nullable: true })
   async findByEmail(@Arg("email", type => String) email: string) {
-    return await getRepository(User).findOne({ email: email });
+    // return await getRepository(User).findOne({ email: email });
+    return await User.findOne({ email: email });
   }
 
   /**
@@ -24,7 +24,7 @@ export class FindResolver {
    */
   @Query(returns => [User], { nullable: true })
   async findUsers() {
-    return await getRepository(User).find({});
+    return await User.find({});
   }
 
   /**
@@ -34,7 +34,7 @@ export class FindResolver {
    */
   @Query(returns => [User], { nullable: true })
   async findByName(@Arg("name", type => String) name: string) {
-    return await getRepository(User).find({ name: name });
+    return await User.find({ name: name });
   }
 
   /**
@@ -44,6 +44,6 @@ export class FindResolver {
    */
   @Query(returns => [User], { nullable: true })
   async findByLastName(@Arg("lastName", type => String) lastName: string) {
-    return await getRepository(User).find({ lastName: lastName });
+    return await User.find({ lastName: lastName });
   }
 }
