@@ -1,4 +1,5 @@
 import {
+<<<<<<< HEAD
 	registerDecorator,
 	ValidationOptions,
 	ValidatorConstraint,
@@ -6,6 +7,15 @@ import {
 } from 'class-validator';
 import { User } from '../../../entities/User';
 import { getRepository } from 'typeorm';
+=======
+  registerDecorator,
+  ValidationOptions,
+  ValidatorConstraint,
+  ValidatorConstraintInterface
+} from "class-validator";
+import { User } from "../../../entities/User";
+import { getRepository } from "typeorm";
+>>>>>>> origin/LM-1202
 
 /**
  * Validator class (Decorator)

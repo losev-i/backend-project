@@ -1,6 +1,6 @@
-import 'reflect-metadata';
-import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from 'typeorm';
-import { ObjectType, Field, Root } from 'type-graphql';
+import "reflect-metadata";
+import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from "typeorm";
+import { ObjectType, Field, Root } from "type-graphql";
 
 /**
  * Entity class
@@ -21,7 +21,7 @@ export class User extends BaseEntity {
   lastName!: string;
 
   @Field()
-  @Column('text', { unique: true })
+  @Column("text", { unique: true })
   email!: string;
 
   @Field()

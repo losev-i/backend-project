@@ -1,6 +1,6 @@
-import app from '../src/index';
-import _ from 'lodash';
-import { createConnection } from 'typeorm';
+import app from "../src/index";
+import _ from "lodash";
+import { createConnection } from "typeorm";
 
 async function start(options: { port?: number }) {
 	await createConnection();
