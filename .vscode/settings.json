@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-    "git.ignoreLimitWarning": true
-=======
-    "git.ignoreLimitWarning": true,
-    "javascript.implicitProjectConfig.experimentalDecorators": true
->>>>>>> origin/LM-1202
+  "git.ignoreLimitWarning": true,
+  "javascript.implicitProjectConfig.experimentalDecorators": true
 }

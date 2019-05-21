@@ -5,22 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const koa_1 = __importDefault(require("koa"));
 const koa_mount_1 = __importDefault(require("koa-mount"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const koa_logger_1 = __importDefault(require("koa-logger"));
-const koa_session_ts_1 = __importDefault(require("koa-session-ts"));
-const koa_passport_1 = __importDefault(require("koa-passport"));
-const routes_1 = __importDefault(require("./routes"));
-mongoose_1.default.connect('mongodb://localhost/backendProject', {
-    useNewUrlParser: true
-});
-mongoose_1.default.set('useCreateIndex', true);
-exports.app = new koa_1.default();
-exports.app.keys = ['secret-keys'];
-exports.app
-    .use(koa_mount_1.default('/', routes_1.default))
-    .use(koa_logger_1.default())
-    .use(koa_session_ts_1.default())
-    .use(koa_passport_1.default.initialize())
-    .use(koa_passport_1.default.session());
-exports.default = exports.app;
+const graphqlHTTP = require('koa-graphql');
+// import routes from './routes';
+// import { GraphQLSchema, GraphQLObjectType, GraphQLList } from 'graphql';
+const graphql_1 = require("./graphql");
+// import { User } from './graphql/entity/User';
+async function app() {
+    const app = new koa_1.default();
+    app.use(koa_mount_1.default('/graphql', graphqlHTTP({
+        schema: await graphql_1.RootSchema(),
+        graphiql: process.env.NODE_ENV !== 'production'
+    })));
+    return app;
+}
+exports.app = app;
 //# sourceMappingURL=app.js.map

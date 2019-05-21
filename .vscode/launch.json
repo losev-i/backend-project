@@ -7,7 +7,6 @@
     {
       "type": "node",
       "request": "launch",
-<<<<<<< HEAD
       "name": "Current File",
       "program": "${workspaceFolder}/bin/www.ts",
       "preLaunchTask": "tsc: build - tsconfig.json",
@@ -20,11 +19,6 @@
       "program": "${workspaceFolder}/node_modules/ava/profile.js",
       "args": ["${file}"],
       "skipFiles": ["<node_internals>/**/*.js"]
-=======
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/out/bin/www.js",
-      "outFiles": ["${workspaceFolder}/**/*.js"]
->>>>>>> origin/LM-1202
     }
   ]
 }
