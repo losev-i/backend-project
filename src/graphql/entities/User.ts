@@ -5,7 +5,10 @@ import { ObjectType, Field, Root } from 'type-graphql';
 /**
  * Entity class
  * Defines the structure of User objects
- * Ersetzt das Schema
+ * Ersetzt das User-Schema
+ * ! = required
+ * @field() -> kann ausgelesen werden
+ * @column() -> kann geschrieben werden
  */
 @ObjectType()
 @Entity()
