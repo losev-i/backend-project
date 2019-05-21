@@ -1,6 +1,24 @@
-import "reflect-metadata";
-import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from "typeorm";
-import { ObjectType, Field, Root } from "type-graphql";
+import 'reflect-metadata';
+
+import { Field, ObjectType, registerEnumType, Root } from 'type-graphql';
+import { BaseEntity, Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+
+/**
+ * Defines the User Roles
+ */
+export enum Role {
+	ADMIN = 'ADMIN',
+	USER = 'USER',
+	GUEST = 'GUEST'
+}
+
+/**
+ * Register enum type Role
+ */
+registerEnumType(Role, {
+	name: 'Role',
+	description: 'The basic role types'
+});
 
 /**
  * Entity class
@@ -9,26 +27,30 @@ import { ObjectType, Field, Root } from "type-graphql";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @ObjectIdColumn()
-  id!: ObjectID;
+	@ObjectIdColumn()
+	id!: ObjectID;
 
-  @Field()
-  @Column()
-  firstName!: string;
+	@Field()
+	@Column()
+	firstName!: string;
 
-  @Field()
-  @Column()
-  lastName!: string;
+	@Field()
+	@Column()
+	lastName!: string;
 
-  @Field()
-  @Column("text", { unique: true })
-  email!: string;
+	@Field()
+	@Column('text', { unique: true })
+	email!: string;
 
-  @Field()
-  name(@Root() parent: User): string {
-    return `${parent.firstName} ${parent.lastName}`;
-  }
+	@Field()
+	name(@Root() parent: User): string {
+		return `${parent.firstName} ${parent.lastName}`;
+	}
 
-  @Column()
-  password!: string;
+	@Column()
+	password!: string;
+
+	@Field()
+	@Column()
+	role!: Role;
 }

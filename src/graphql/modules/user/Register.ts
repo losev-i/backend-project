@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query } from 'type-graphql';
 import * as bcrypt from 'bcryptjs';
 
-import { User } from '../../entity/User';
+import { User } from '../../entities/User';
 import { RegisterInput } from './register/RegisterInput';
 
 @Resolver()
@@ -19,7 +19,8 @@ export class RegisterResolver {
 		firstName,
 		lastName,
 		email,
-		password
+		password,
+		role
 	}: RegisterInput): Promise<User> {
 		const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -27,6 +28,7 @@ export class RegisterResolver {
 			firstName,
 			lastName,
 			email,
+			role,
 			password: hashedPassword
 		}).save();
 

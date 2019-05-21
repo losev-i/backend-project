@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { Length, IsEmail } from 'class-validator';
 import { InputType, Field } from 'type-graphql';
 import { IsEmailAlreadyExist } from './isEmailAlreadyExist';
+import { Role } from '../../../entities/User';
 
 /**
  * InputType Class, defines input types
@@ -23,4 +24,7 @@ export class RegisterInput {
 
 	@Field()
 	password!: string;
+
+	@Field(type => Role)
+	role!: Role;
 }
