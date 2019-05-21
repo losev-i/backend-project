@@ -1,9 +1,9 @@
-import 'reflect-metadata';
-import { Resolver, Mutation, Arg, Query } from 'type-graphql';
-import * as bcrypt from 'bcryptjs';
+import "reflect-metadata";
+import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import * as bcrypt from "bcryptjs";
 
-import { User } from '../../../entities/User';
-import { RegisterInput } from './RegisterInput';
+import { User } from "../../../entities/User";
+import { RegisterInput } from "./RegisterInput";
 
 /**
  * Resolver class
@@ -16,7 +16,7 @@ export class RegisterResolver {
    */
   @Query(() => User, { nullable: true })
   hello(): string {
-    return 'Hello World!';
+    return "Hello World!";
   }
 
   /**
@@ -26,7 +26,7 @@ export class RegisterResolver {
    * @returns registered User
    */
   @Mutation(() => User)
-  async register(@Arg('data')
+  async register(@Arg("data")
   {
     firstName,
     lastName,

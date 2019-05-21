@@ -1,9 +1,9 @@
-import 'reflect-metadata';
-import { Resolver, Query, Arg, Mutation } from 'type-graphql';
-import { User } from '../../../entities/User';
-import * as bcrypt from 'bcryptjs';
-import { LoginInput } from './LoginInput';
-import { getRepository } from 'typeorm';
+import "reflect-metadata";
+import { Resolver, Query, Arg, Mutation } from "type-graphql";
+import { User } from "../../../entities/User";
+import * as bcrypt from "bcryptjs";
+import { LoginInput } from "./LoginInput";
+import { getRepository } from "typeorm";
 
 /**
  * Resolver class
@@ -16,7 +16,7 @@ export class LoginResolver {
    * @returns null if user credentials are invalid, else User object
    */
   @Mutation(() => User, { nullable: true })
-  async login(@Arg('data')
+  async login(@Arg("data")
   {
     email,
     password

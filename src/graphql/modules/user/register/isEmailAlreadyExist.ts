@@ -3,9 +3,9 @@ import {
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface
-} from 'class-validator';
-import { User } from '../../../entities/User';
-import { getRepository } from 'typeorm';
+} from "class-validator";
+import { User } from "../../../entities/User";
+import { getRepository } from "typeorm";
 
 /**
  * Validator class (Decorator)
