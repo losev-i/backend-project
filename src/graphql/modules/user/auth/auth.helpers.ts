@@ -43,22 +43,22 @@ export const testUsers = [
  */
 export interface Context {
 	/** current user in Context */
-	users?: User[];
+	user?: User;
 }
 
 export const userAuthChecker: AuthChecker<Context, Role> = (
-	{ context: { users } },
+	{ context: { user } },
 	roles: Role[]
 ) => {
 	roles;
 	// if @Authorized() check only if user exist
-	// if (users.length === 0) {
-	// 	return users !== undefined;
-	// }
-	// checking other roles
+	if (roles.length === 0) {
+		return user !== undefined;
+	}
+	// TODO: checking other roles
 
 	// if no user restrict access
-	if (!users) {
+	if (!user) {
 		return false;
 	}
 
