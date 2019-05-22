@@ -1,6 +1,7 @@
 import 'reflect-metadata';
-import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from 'typeorm';
-import { ObjectType, Field, Root } from 'type-graphql';
+
+import { Field, ObjectType, registerEnumType, Root } from 'type-graphql';
+import { BaseEntity, Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
 
 /**
  * Entity class
@@ -9,6 +10,26 @@ import { ObjectType, Field, Root } from 'type-graphql';
  * ! = required
  * @field() -> kann ausgelesen werden
  * @column() -> kann geschrieben werden
+ *
+ * Defines the User Roles
+ */
+export enum Role {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  GUEST = 'GUEST'
+}
+
+/**
+ * Register enum type Role
+ */
+registerEnumType(Role, {
+  name: 'Role',
+  description: 'The basic role types'
+});
+
+/**
+ * Entity class
+ * Defines the structure of User objects
  */
 @ObjectType()
 @Entity()
@@ -35,4 +56,8 @@ export class User extends BaseEntity {
 
   @Column()
   password!: string;
+
+  @Field()
+  @Column()
+  role!: Role;
 }
