@@ -28,12 +28,13 @@ export class IsEmailAlreadyExistConstraint
  * Exports the decorator
  * @param ValidationOptions
  */
-export function IsEmailAlreadyExist(ValidationOptions?: ValidationOptions) {
+export function IsEmailAlreadyExist(validationOptions?: ValidationOptions) {
   return function(object: Object, propertyName: string) {
     registerDecorator({
+      name: 'EmailAlreadyExist',
       target: object.constructor,
       propertyName: propertyName,
-      options: ValidationOptions,
+      options: validationOptions,
       constraints: [],
       validator: IsEmailAlreadyExistConstraint
     });
