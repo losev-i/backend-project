@@ -1,7 +1,7 @@
-import "reflect-metadata";
-import { Length, IsEmail } from "class-validator";
-import { InputType, Field } from "type-graphql";
-import { IsEmailAlreadyExist } from "./isEmailAlreadyExist";
+import 'reflect-metadata';
+import { Length, IsEmail } from 'class-validator';
+import { InputType, Field } from 'type-graphql';
+import { IsEmailAlreadyExist } from './isEmailAlreadyExist';
 
 /**
  * InputType Class, defines input types
@@ -18,7 +18,7 @@ export class RegisterInput {
 
   @Field()
   @IsEmail()
-  @IsEmailAlreadyExist({ message: "email already in use" })
+  @IsEmailAlreadyExist({ message: 'email already in use' })
   email!: string;
 
   @Field()

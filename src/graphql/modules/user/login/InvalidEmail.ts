@@ -16,11 +16,11 @@ export class InvalidEmailConstraint implements ValidatorConstraintInterface {
    * @param email The email that is to be validated
    * @returns boolean
    */
-  validate(email: string) {
-    if (User.findOne({ email: email.toLowerCase() })) {
-      return false;
+  async validate(email: string) {
+    if (await User.findOne({ email: email.toLowerCase() })) {
+      return true;
     }
-    return true;
+    return false;
   }
 }
 /**

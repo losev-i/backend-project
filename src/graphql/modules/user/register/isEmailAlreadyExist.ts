@@ -16,8 +16,8 @@ export class IsEmailAlreadyExistConstraint
    * Checks if email exists in database
    * @param email The email that is to be searched for
    */
-  validate(email: string) {
-    if (User.findOne({ email: email.toLowerCase() })) {
+  async validate(email: string) {
+    if (await User.findOne({ email: email.toLowerCase() })) {
       return false;
     }
     return true;
