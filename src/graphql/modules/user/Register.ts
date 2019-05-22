@@ -7,7 +7,7 @@ import { RegisterInput } from './register/RegisterInput';
 
 @Resolver()
 export class RegisterResolver {
-	// Jede Resolver-Klasse braucht mindestens eine Query, sonst gibt es einen Generate Schema Error
+	// every resolver class needs at least one query (generate schema error)
 	@Query(() => User, { nullable: true })
 	hello(): string {
 		return 'Hello World!';

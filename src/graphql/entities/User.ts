@@ -1,10 +1,16 @@
 import 'reflect-metadata';
 
-import { Field, ObjectType, registerEnumType, Root } from 'type-graphql';
+import {
+	Authorized,
+	Field,
+	ObjectType,
+	registerEnumType,
+	Root
+} from 'type-graphql';
 import { BaseEntity, Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
 
 /**
- * Defines the User Roles
+ * Defines the user roles
  */
 export enum Role {
 	ADMIN = 'ADMIN',
@@ -27,30 +33,55 @@ registerEnumType(Role, {
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
+	/** User ID */
 	@ObjectIdColumn()
+	// mongoose object id?
 	id!: ObjectID;
 
-	@Field()
-	@Column()
-	firstName!: string;
-
-	@Field()
-	@Column()
-	lastName!: string;
-
+	/** UserName */
 	@Field()
 	@Column('text', { unique: true })
+	@Authorized('ADMIN')
+	userName!: string;
+
+	/** FirstName */
+	@Field()
+	@Column()
+	// all logged users can see firstname
+	@Authorized()
+	firstName!: string;
+
+	/** LastName */
+	@Field()
+	@Column()
+	@Authorized()
+	lastName!: string;
+
+	/** Email */
+	@Field()
+	@Column('text', { unique: true })
+	@Authorized()
 	email!: string;
 
+	// Warum noch ein Feld mit dem gesamten Namen???
 	@Field()
 	name(@Root() parent: User): string {
 		return `${parent.firstName} ${parent.lastName}`;
 	}
 
+	/** User Password */
 	@Column()
 	password!: string;
 
+	/** User role */
 	@Field()
 	@Column()
+	// only admin can see the user role
+	@Authorized('ADMIN')
 	role!: Role;
+
+	/** Returns firstname and lastname of an user */
+	// get name(): string {
+	// 	return this.firstName + ' ' + this.lastName;
+	// }
 }

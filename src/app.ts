@@ -1,9 +1,11 @@
 import koa from 'koa';
 import mount from 'koa-mount';
+
+import { RootSchema } from './graphql';
+
 const graphqlHTTP = require('koa-graphql');
 // import routes from './routes';
 // import { GraphQLSchema, GraphQLObjectType, GraphQLList } from 'graphql';
-import { RootSchema } from './graphql';
 // import { User } from './graphql/entity/User';
 
 export async function app() {
