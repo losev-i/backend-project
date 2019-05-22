@@ -30,6 +30,7 @@ export class InvalidEmailConstraint implements ValidatorConstraintInterface {
 export function InvalidEmail(ValidationOptions?: ValidationOptions) {
   return function(object: Object, propertyName: string) {
     registerDecorator({
+      name: 'Email does not exist.',
       target: object.constructor,
       propertyName: propertyName,
       options: ValidationOptions,
