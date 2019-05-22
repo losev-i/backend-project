@@ -6,6 +6,13 @@ import { LoginResolver } from './modules/user/login/LoginResolver';
 
 export async function RootSchema() {
   return await buildSchema({
-    resolvers: [RegisterResolver, FindResolver, LoginResolver]
+    resolvers: [RegisterResolver, FindResolver, LoginResolver],
+    validate: {
+      validationError: {
+        target: false,
+        value: true
+      },
+      dismissDefaultMessages: false
+    }
   });
 }
