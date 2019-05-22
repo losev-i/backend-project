@@ -33,6 +33,7 @@ export class RegisterResolver {
     email,
     password
   }: RegisterInput): Promise<User> {
+    email = email.toLowerCase();
     const user = await User.create({
       firstName,
       lastName,
