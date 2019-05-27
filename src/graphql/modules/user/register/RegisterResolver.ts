@@ -31,13 +31,16 @@ export class RegisterResolver {
     firstName,
     lastName,
     email,
-    password
+    password,
+    userName,
+    role
   }: RegisterInput): Promise<User> {
-    email = email.toLowerCase();
     const user = await User.create({
       firstName,
       lastName,
       email,
+      userName,
+      role,
       password: await bcrypt.hash(password, 12)
     }).save();
 

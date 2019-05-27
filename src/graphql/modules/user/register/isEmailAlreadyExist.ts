@@ -5,6 +5,7 @@ import {
   ValidatorConstraintInterface
 } from "class-validator";
 import { User } from "../../../entities/User";
+import { getRepository } from "typeorm";
 
 /**
  * Validator class (Decorator)
@@ -16,11 +17,11 @@ export class IsEmailAlreadyExistConstraint
    * Checks if email exists in database
    * @param email The email that is to be searched for
    */
-  validate(email: string) {
-    if (User.findOne({ email: email.toLowerCase() })) {
-      return true;
+  async validate(email: string) {
+    if (await getRepository(User).findOne({ email: email })) {
+      return false;
     }
-    return false;
+    return true;
   }
 }
 

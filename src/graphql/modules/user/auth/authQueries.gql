@@ -1,0 +1,18 @@
+query{
+  getUsers {
+    firstName,
+    lastName
+  }
+}
+query{
+  getUsers {
+    firstName,
+    lastName,
+    email
+  }
+}
+mutation {
+  deleteUser(userName: "il") {
+    userName
+  }
+}

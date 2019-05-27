@@ -1,6 +1,30 @@
-import "reflect-metadata";
-import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from "typeorm";
-import { ObjectType, Field, Root } from "type-graphql";
+import 'reflect-metadata';
+
+import {
+	Authorized,
+	Field,
+	ObjectType,
+	registerEnumType,
+	Root
+} from 'type-graphql';
+import { BaseEntity, Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+
+/**
+ * Defines the user roles
+ */
+export enum Role {
+	ADMIN = 'ADMIN',
+	USER = 'USER',
+	GUEST = 'GUEST'
+}
+
+/**
+ * Register enum type Role
+ */
+registerEnumType(Role, {
+	name: 'Role',
+	description: 'The basic role types'
+});
 
 /**
  * Entity class
@@ -9,26 +33,50 @@ import { ObjectType, Field, Root } from "type-graphql";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @ObjectIdColumn()
-  id!: ObjectID;
+	/** User ID */
+	@ObjectIdColumn()
+	// mongoose object id?
+	id!: ObjectID;
 
-  @Field()
-  @Column()
-  firstName!: string;
+	/** UserName */
+	@Field()
+	@Column('text', { unique: true })
+	@Authorized(Role.ADMIN)
+	userName!: string;
 
-  @Field()
-  @Column()
-  lastName!: string;
+	/** FirstName */
+	@Field()
+	@Column()
+	// all logged users can see firstname
+	//@Authorized()
+	firstName!: string;
 
-  @Field()
-  @Column("text", { unique: true })
-  email!: string;
+	/** LastName */
+	@Field()
+	@Column()
+	//@Authorized()
+	lastName!: string;
 
-  @Field()
-  name(@Root() parent: User): string {
-    return `${parent.firstName} ${parent.lastName}`;
-  }
+	/** Email */
+	@Field()
+	@Column('text', { unique: true })
+	@Authorized()
+	email!: string;
 
-  @Column()
-  password!: string;
+	// Warum noch ein Feld mit dem gesamten Namen???
+	@Field()
+	name(@Root() parent: User): string {
+		return `${parent.firstName} ${parent.lastName}`;
+	}
+
+	/** User Password */
+	@Column()
+	password!: string;
+
+	/** User role */
+	@Field()
+	@Column()
+	// only admin can see the user role
+	@Authorized(Role.ADMIN)
+	role!: Role;
 }

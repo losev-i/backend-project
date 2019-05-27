@@ -1,6 +1,8 @@
 import "reflect-metadata";
-import { Resolver, Query, Arg } from "type-graphql";
-import { User } from "../../../entities/User";
+
+import { Arg, Query, Resolver } from "type-graphql";
+
+import { Role, User } from "../../../entities/User";
 
 /**
  * Resolver class
@@ -44,5 +46,25 @@ export class FindResolver {
   @Query(returns => [User], { nullable: true })
   async findByLastName(@Arg("lastName", type => String) lastName: string) {
     return await User.find({ lastName: lastName });
+  }
+
+  /**
+   * Query which searches Users by given role
+   * @param role User role
+   * @returns User objects with matching role
+   */
+  @Query(returns => [User], { nullable: true })
+  async findByRole(@Arg("role", type => Role) role: Role) {
+    return await User.find({ role: role });
+  }
+
+  /**
+   * Query which searches Users by given userName
+   * @param userName Users username
+   * @returns User objects with matching userName
+   */
+  @Query(returns => [User], { nullable: true })
+  async findByUserName(@Arg("userName", type => String) userName: string) {
+    return await User.findOne({ userName: userName });
   }
 }

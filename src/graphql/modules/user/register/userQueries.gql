@@ -1,0 +1,45 @@
+mutation {
+  register(data: {
+    firstName: "Inna", 
+    lastName: "Losev", 
+    email: "i515@ev.de", 
+    userName: "il", 
+    password: "12345", 
+    role: ADMIN}) {
+    firstName,
+    lastName,
+    email,
+    userName,
+    role
+  }
+},
+mutation {
+  register(data: {
+    firstName: "Leon", 
+    lastName: "Meister", 
+    email: "lm@dev.de", 
+    userName: "lmeister", 
+    password: "23456", 
+    role: USER}) {
+    firstName,
+    lastName,
+    email,
+    userName,
+    role
+  }
+},
+mutation {
+  register(data: {
+    firstName: "Rene", 
+    lastName: "Springer", 
+    email: "rs@dev.de", 
+    userName: "rspringer", 
+    password: "34567", 
+    role: GUEST}) {
+    firstName,
+    lastName,
+    email,
+    userName,
+    role
+  }
+}
