@@ -1,4 +1,6 @@
 import { User, Role } from "../../../entities/User";
+import { plainToClass } from "class-transformer";
+import { ObjectID } from "typeorm";
 import { AuthChecker } from "type-graphql";
 
 export const userAuthChecker: AuthChecker<boolean> = () => {
