@@ -25,6 +25,9 @@ export class RegisterInput {
 	@Field()
 	password!: string;
 
+	@Field()
+	userName!: string;
+
 	@Field(type => Role)
 	role!: Role;
 }

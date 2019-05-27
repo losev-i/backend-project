@@ -41,20 +41,20 @@ export class User extends BaseEntity {
 	/** UserName */
 	@Field()
 	@Column('text', { unique: true })
-	@Authorized('ADMIN')
+	@Authorized(Role.ADMIN)
 	userName!: string;
 
 	/** FirstName */
 	@Field()
 	@Column()
 	// all logged users can see firstname
-	@Authorized()
+	//@Authorized()
 	firstName!: string;
 
 	/** LastName */
 	@Field()
 	@Column()
-	@Authorized()
+	//@Authorized()
 	lastName!: string;
 
 	/** Email */
@@ -77,11 +77,6 @@ export class User extends BaseEntity {
 	@Field()
 	@Column()
 	// only admin can see the user role
-	@Authorized('ADMIN')
+	@Authorized(Role.ADMIN)
 	role!: Role;
-
-	/** Returns firstname and lastname of an user */
-	// get name(): string {
-	// 	return this.firstName + ' ' + this.lastName;
-	// }
 }

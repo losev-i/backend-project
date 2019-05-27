@@ -20,6 +20,7 @@ export class RegisterResolver {
 		lastName,
 		email,
 		password,
+		userName,
 		role
 	}: RegisterInput): Promise<User> {
 		const hashedPassword = await bcrypt.hash(password, 12);
@@ -28,8 +29,9 @@ export class RegisterResolver {
 			firstName,
 			lastName,
 			email,
+			password: hashedPassword,
 			role,
-			password: hashedPassword
+			userName
 		}).save();
 
 		return user;

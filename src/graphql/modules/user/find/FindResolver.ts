@@ -57,4 +57,14 @@ export class FindResolver {
 	async findByRole(@Arg('role', type => Role) role: Role) {
 		return await User.find({ role: role });
 	}
+
+	/**
+	 * Query which searches Users by given userName
+	 * @param userName Users username
+	 * @returns User objects with matching userName
+	 */
+	@Query(returns => [User], { nullable: true })
+	async findByUserName(@Arg('userName', type => String) userName: string) {
+		return await User.findOne({ userName: userName });
+	}
 }

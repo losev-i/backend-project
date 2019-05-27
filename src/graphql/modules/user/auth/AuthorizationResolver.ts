@@ -1,19 +1,16 @@
 import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql';
 
 import { Role, User } from '../../../entities/User';
-import { createUser, testUsers } from './auth.helpers';
+import { getRepository } from 'typeorm';
 
 @Resolver()
 export class AuthorizationResolver {
-	/** All existing users */
-	private userData: User[] = testUsers;
-
 	/**
 	 * Getter for all users
 	 */
 	@Query(returns => [User])
 	async getUsers(): Promise<User[]> {
-		return await this.userData;
+		return await User.find({});
 	}
 
 	// TODO: or instead of ADMIN -> Role.ADMIN ?
@@ -25,25 +22,27 @@ export class AuthorizationResolver {
 	 * @param email Email of the new User
 	 * @param role Role of the new User
 	 */
-	@Authorized('ADMIN')
-	@Mutation()
-	addUser(
+	@Authorized(Role.ADMIN)
+	@Mutation(() => User)
+	async addUser(
 		@Arg('userName') userName: string,
 		@Arg('firstName') firstName: string,
 		@Arg('lastName') lastName: string,
 		@Arg('email') email: string,
-		@Arg('role') role: Role
-	): User {
+		@Arg('role') role: Role,
+		@Arg('password') password: string
+	): Promise<User> {
 		// create new user with given data
-		const newUser = createUser({
+		const newUser: User = await User.create({
 			userName,
 			firstName,
 			lastName,
 			email,
-			role
+			role,
+			password
 		});
 		// add new user to user array
-		this.userData.push(newUser);
+		newUser.save();
 		return newUser;
 	}
 
@@ -51,17 +50,11 @@ export class AuthorizationResolver {
 	 * Admin can delete user by given userName
 	 * @param userName User to delete
 	 */
-	@Authorized('ADMIN')
-	@Mutation()
-	deleteUser(@Arg('userName') userName: string): boolean {
-		const userIndex = this.userData.findIndex(
-			user => user.userName === userName
-		);
-		if (!userIndex) {
-			return false;
-		}
-		// delete user from user array
-		this.userData.splice(userIndex, 1);
-		return true;
+	@Authorized(Role.ADMIN)
+	@Mutation(() => User)
+	async deleteUser(@Arg('userName') userName: string) {
+		getRepository(User).delete({ userName: userName });
+
+		return { userName };
 	}
 }
