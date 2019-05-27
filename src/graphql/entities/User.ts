@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+<<<<<<< HEAD
 
 import {
 	Authorized,
@@ -25,6 +26,10 @@ registerEnumType(Role, {
 	name: 'Role',
 	description: 'The basic role types'
 });
+=======
+import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from 'typeorm';
+import { ObjectType, Field, Root } from 'type-graphql';
+>>>>>>> origin/JS-5796
 
 /**
  * Entity class
@@ -63,11 +68,17 @@ export class User extends BaseEntity {
 	@Authorized()
 	email!: string;
 
+<<<<<<< HEAD
 	// Warum noch ein Feld mit dem gesamten Namen???
 	@Field()
 	name(@Root() parent: User): string {
 		return `${parent.firstName} ${parent.lastName}`;
 	}
+=======
+  @Field()
+  @Column('text', { unique: true })
+  email!: string;
+>>>>>>> origin/JS-5796
 
 	/** User Password */
 	@Column()

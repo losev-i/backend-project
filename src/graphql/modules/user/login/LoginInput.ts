@@ -7,9 +7,15 @@ import { InvalidEmail } from './InvalidEmail';
  */
 @InputType()
 export class LoginInput {
+<<<<<<< HEAD
 	@Field()
 	@InvalidEmail({ message: 'email not found' })
 	email!: string;
+=======
+  @Field()
+  @InvalidEmail({ message: 'Email not found.' })
+  email!: string;
+>>>>>>> origin/JS-5796
 
 	@Field()
 	password!: string;
