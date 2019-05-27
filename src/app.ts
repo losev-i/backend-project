@@ -15,6 +15,9 @@ export async function app() {
       graphqlHTTP({
         schema: await RootSchema(),
         graphiql: process.env.NODE_ENV !== 'production'
+        // formatError: (error: GraphQLError) => {
+        //   return { ...error, ServerError: error.originalError };
+        // }
       })
     )
   );

@@ -8,7 +8,7 @@ import { InvalidEmail } from './InvalidEmail';
 @InputType()
 export class LoginInput {
   @Field()
-  @InvalidEmail({ message: 'email not found' })
+  @InvalidEmail({ message: 'Email not found.' })
   email!: string;
 
   @Field()
