@@ -19,9 +19,9 @@ export class IsEmailAlreadyExistConstraint
 	 */
 	async validate(email: string) {
 		if (await getRepository(User).findOne({ email: email })) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 }
 
