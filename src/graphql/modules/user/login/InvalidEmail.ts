@@ -5,7 +5,6 @@ import {
 	ValidatorConstraintInterface
 } from 'class-validator';
 import { User } from '../../../entities/User';
-import { getRepository } from 'typeorm';
 
 /**
  * Validator class (Decorator)
@@ -17,8 +16,8 @@ export class InvalidEmailConstraint implements ValidatorConstraintInterface {
 	 * @param email The email that is to be validated
 	 * @returns boolean
 	 */
-	validate(email: string) {
-		if (getRepository(User).findOne({ email: email })) {
+	async validate(email: string) {
+		if (await User.findOne({ email: email.toLowerCase() })) {
 			return true;
 		}
 		return false;
@@ -31,6 +30,7 @@ export class InvalidEmailConstraint implements ValidatorConstraintInterface {
 export function InvalidEmail(ValidationOptions?: ValidationOptions) {
 	return function(object: Object, propertyName: string) {
 		registerDecorator({
+			name: 'Email does not exist.',
 			target: object.constructor,
 			propertyName: propertyName,
 			options: ValidationOptions,

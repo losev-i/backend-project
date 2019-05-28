@@ -1,6 +1,4 @@
-import { User, Role } from '../../../entities/User';
-import { plainToClass } from 'class-transformer';
-import { ObjectID } from 'typeorm';
+import { User } from '../../../entities/User';
 import { AuthChecker } from 'type-graphql';
 
 export const userAuthChecker: AuthChecker<boolean> = () => {
@@ -17,6 +15,6 @@ export const userAuthChecker: AuthChecker<boolean> = () => {
 		return false;
 	}
 
-	// restrict acces if no roles matched
+	// restrict access if no roles matched
 	return false;
 };
