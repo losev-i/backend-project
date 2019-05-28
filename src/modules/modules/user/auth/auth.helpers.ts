@@ -1,4 +1,4 @@
-import { User } from '../../../entities/User';
+import { User } from '../../../users/User';
 import { AuthChecker } from 'type-graphql';
 
 export const userAuthChecker: AuthChecker<boolean> = () => {

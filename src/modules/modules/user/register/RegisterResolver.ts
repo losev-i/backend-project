@@ -2,36 +2,46 @@ import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query } from 'type-graphql';
 import * as bcrypt from 'bcryptjs';
 
-import { User } from '../../entities/User';
-import { RegisterInput } from './register/RegisterInput';
+import { User } from '../../../users/User';
+import { RegisterInput } from './RegisterInput';
 
+/**
+ * Resolver class
+ */
 @Resolver()
 export class RegisterResolver {
-	// every resolver class needs at least one query (generate schema error)
+	/**
+	 * Resolver class needs query, otherwise an error is thrown
+	 * Will be replaced
+	 */
 	@Query(() => User, { nullable: true })
 	hello(): string {
 		return 'Hello World!';
 	}
 
+	/**
+	 * Registration mutation
+	 * Has to be extended to include permissions/roles etc. (?)
+	 * Hashes the password using bcrypt
+	 * @returns registered User
+	 */
 	@Mutation(() => User)
-	async register(@Arg('data')
+	async register(@Arg('userData')
 	{
 		firstName,
 		lastName,
 		email,
 		password,
-		userName,
+		name,
 		role
 	}: RegisterInput): Promise<User> {
-		const hashedPassword = await bcrypt.hash(password, 12);
-
 		const user = await User.create({
 			firstName,
 			lastName,
 			email,
-			password: hashedPassword,
+			name,
 			role,
-			userName
+			password: await bcrypt.hash(password, 12)
 		}).save();
 
 		return user;

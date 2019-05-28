@@ -4,39 +4,38 @@ import {
 	ValidatorConstraint,
 	ValidatorConstraintInterface
 } from 'class-validator';
-import { User } from '../../../entities/User';
+import { User } from '../../../users/User';
 
 /**
  * Validator class (Decorator)
  */
 @ValidatorConstraint({ async: true })
-export class IsEmailAlreadyExistConstraint
-	implements ValidatorConstraintInterface {
+export class InvalidEmailConstraint implements ValidatorConstraintInterface {
 	/**
 	 * Checks if email exists in database
-	 * @param email The email that is to be searched for
+	 * @param email The email that is to be validated
+	 * @returns boolean
 	 */
 	async validate(email: string) {
 		if (await User.findOne({ email: email.toLowerCase() })) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
-
 /**
  * Exports the decorator
  * @param ValidationOptions
  */
-export function IsEmailAlreadyExist(validationOptions?: ValidationOptions) {
+export function InvalidEmail(ValidationOptions?: ValidationOptions) {
 	return function(object: Object, propertyName: string) {
 		registerDecorator({
-			name: 'EmailAlreadyExist',
+			name: 'Email does not exist.',
 			target: object.constructor,
 			propertyName: propertyName,
-			options: validationOptions,
+			options: ValidationOptions,
 			constraints: [],
-			validator: IsEmailAlreadyExistConstraint
+			validator: InvalidEmailConstraint
 		});
 	};
 }

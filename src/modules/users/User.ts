@@ -40,42 +40,36 @@ export class User extends BaseEntity {
 
 	/** UserName */
 	@Field()
-	@Column('text', { unique: true })
+	@Column({ unique: true })
 	@Authorized(Role.ADMIN)
-	userName!: string;
+	name!: string;
 
 	/** FirstName */
 	@Field()
-	@Column()
+	@Column('firstName')
 	// all logged users can see firstname
 	//@Authorized()
-	firstName!: string;
+	firstName?: string;
 
 	/** LastName */
 	@Field()
-	@Column()
+	@Column('lastName')
 	//@Authorized()
-	lastName!: string;
+	lastName?: string;
 
 	/** Email */
 	@Field()
-	@Column('text', { unique: true })
+	@Column({ unique: true })
 	@Authorized()
 	email!: string;
 
-	// Warum noch ein Feld mit dem gesamten Namen???
-	@Field()
-	name(@Root() parent: User): string {
-		return `${parent.firstName} ${parent.lastName}`;
-	}
-
 	/** User Password */
-	@Column()
+	@Column('password')
 	password!: string;
 
 	/** User role */
 	@Field()
-	@Column()
+	@Column('role')
 	// only admin can see the user role
 	@Authorized(Role.ADMIN)
 	role!: Role;

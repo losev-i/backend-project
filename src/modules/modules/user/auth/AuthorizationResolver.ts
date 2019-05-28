@@ -1,6 +1,6 @@
 import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql';
 
-import { Role, User } from '../../../entities/User';
+import { Role, User } from '../../../users/User';
 import { getRepository } from 'typeorm';
 
 @Resolver()
@@ -25,7 +25,7 @@ export class AuthorizationResolver {
 	@Authorized(Role.ADMIN)
 	@Mutation(() => User)
 	async addUser(
-		@Arg('userName') userName: string,
+		@Arg('name') name: string,
 		@Arg('firstName') firstName: string,
 		@Arg('lastName') lastName: string,
 		@Arg('email') email: string,
@@ -34,7 +34,7 @@ export class AuthorizationResolver {
 	): Promise<User> {
 		// create new user with given data
 		const newUser: User = await User.create({
-			userName,
+			name,
 			firstName,
 			lastName,
 			email,
@@ -52,9 +52,9 @@ export class AuthorizationResolver {
 	 */
 	@Authorized(Role.ADMIN)
 	@Mutation(() => User)
-	async deleteUser(@Arg('userName') userName: string) {
-		getRepository(User).delete({ userName: userName });
+	async deleteUser(@Arg('name') name: string) {
+		getRepository(User).delete({ name: name });
 
-		return { userName };
+		return { name };
 	}
 }

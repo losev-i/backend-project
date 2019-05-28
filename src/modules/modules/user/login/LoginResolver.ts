@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
-import { User } from '../../../entities/User';
+import { User } from '../../../users/User';
 import * as bcrypt from 'bcryptjs';
 import { LoginInput } from './LoginInput';
 import { getRepository } from 'typeorm';

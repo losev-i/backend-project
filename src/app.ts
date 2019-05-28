@@ -3,7 +3,7 @@ import mount from 'koa-mount';
 const graphqlHTTP = require('koa-graphql');
 // import routes from './routes';
 // import { GraphQLSchema, GraphQLObjectType, GraphQLList } from 'graphql';
-import { RootSchema } from './graphql';
+import { RootSchema } from './modules';
 import { GraphQLError } from 'graphql';
 // import { User } from './graphql/entity/User';
 
