@@ -1,8 +1,7 @@
 import 'reflect-metadata';
-
-import { Arg, Query, Resolver } from 'type-graphql';
-
-import { Role, User } from '../../../users/User';
+import { Resolver, Query, Arg } from 'type-graphql';
+import { User } from '../user.model';
+import { getRepository } from 'typeorm';
 
 /**
  * Resolver class
@@ -16,7 +15,7 @@ export class FindResolver {
 	 */
 	@Query(returns => User, { nullable: true })
 	async findByEmail(@Arg('email', type => String) email: string) {
-		return await User.findOne({ email: email });
+		return await getRepository(User).findOne({ email: email });
 	}
 
 	/**
@@ -25,7 +24,7 @@ export class FindResolver {
 	 */
 	@Query(returns => [User], { nullable: true })
 	async findUsers() {
-		return await User.find({});
+		return await getRepository(User).find({});
 	}
 
 	/**
@@ -35,7 +34,7 @@ export class FindResolver {
 	 */
 	@Query(returns => [User], { nullable: true })
 	async findByName(@Arg('name', type => String) name: string) {
-		return await User.find({ name: name });
+		return await getRepository(User).find({ name: name });
 	}
 
 	/**
@@ -45,30 +44,8 @@ export class FindResolver {
 	 */
 	@Query(returns => [User], { nullable: true })
 	async findByLastName(@Arg('lastName', type => String) lastName: string) {
-		return await this.findResolver('lastName', lastName);
-	}
-
-	/**
-	 * Query which searches Users by given role
-	 * @param role User role
-	 * @returns User objects with matching role
-	 */
-	@Query(returns => [User], { nullable: true })
-	async findByRole(@Arg('role', type => Role) role: Role) {
-		return await this.findResolver('role', role);
-	}
-
-	/**
-	 * Query which searches Users by given userName
-	 * @param userName Users username
-	 * @returns User objects with matching userName
-	 */
-	@Query(returns => [User], { nullable: true })
-	async findByUserName(@Arg('name', type => String) name: string) {
-		return await User.findOne({ name: name });
-	}
-
-	findResolver(@Arg('name', type => String) name: string, value?: any) {
-		return User.find({ name: value });
+		return await getRepository(User).find({ lastName: lastName });
 	}
 }
+
+export default FindResolver;
