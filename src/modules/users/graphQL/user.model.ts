@@ -1,8 +1,6 @@
 import 'reflect-metadata';
-
-import { Field, ObjectType } from 'type-graphql';
-import { BaseEntity, Column, Entity, Generated, PrimaryColumn } from 'typeorm';
-
+import { Entity, Column, BaseEntity, Generated, PrimaryColumn } from 'typeorm';
+import { ObjectType, Field } from 'type-graphql';
 import { Role } from '../classes/role';
 
 /**
@@ -13,7 +11,6 @@ import { Role } from '../classes/role';
 @Entity()
 export class User extends BaseEntity {
 	@Generated('uuid')
-	@Column()
 	id!: number;
 
 	@Field()
@@ -35,7 +32,7 @@ export class User extends BaseEntity {
 	@Column()
 	password!: string;
 
-	@Field(type => Role)
+	@Field()
 	@Column()
 	role!: Role;
 }
