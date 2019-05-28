@@ -1,7 +1,7 @@
-import "reflect-metadata";
-import { Resolver, Query, Arg } from "type-graphql";
-import { User } from "../../../entities/User";
-import { getRepository } from "typeorm";
+import 'reflect-metadata';
+import { Resolver, Query, Arg } from 'type-graphql';
+import { User } from '../User.model';
+import { getRepository } from 'typeorm';
 
 /**
  * Resolver class
@@ -14,7 +14,7 @@ export class FindResolver {
    * @returns User object that matches criterion
    */
   @Query(returns => User, { nullable: true })
-  async findByEmail(@Arg("email", type => String) email: string) {
+  async findByEmail(@Arg('email', type => String) email: string) {
     return await getRepository(User).findOne({ email: email });
   }
 
@@ -33,7 +33,7 @@ export class FindResolver {
    * @returns User objects that matches criterion
    */
   @Query(returns => [User], { nullable: true })
-  async findByName(@Arg("name", type => String) name: string) {
+  async findByName(@Arg('name', type => String) name: string) {
     return await getRepository(User).find({ name: name });
   }
 
@@ -43,7 +43,9 @@ export class FindResolver {
    * @returns User objects that matches criterion
    */
   @Query(returns => [User], { nullable: true })
-  async findByLastName(@Arg("lastName", type => String) lastName: string) {
+  async findByLastName(@Arg('lastName', type => String) lastName: string) {
     return await getRepository(User).find({ lastName: lastName });
   }
 }
+
+export default FindResolver;

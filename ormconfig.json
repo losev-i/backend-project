@@ -5,6 +5,6 @@
   "database": "backend-project",
   "synchronize": true,
   "logging": true,
-  "entities": ["src/graphql/entities/*.*"],
+  "entities": ["./**/*.model.ts"],
   "useNewUrlParser": true
 }
