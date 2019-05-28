@@ -1,18 +1,7 @@
-query{
-  getUsers {
-    firstName,
-    lastName
-  }
-}
-query{
-  getUsers {
+query {
+  findResolver(search: "Lisa") {
     firstName,
     lastName,
-    email
-  }
-}
-mutation {
-  deleteUser(userName: "il") {
-    userName
+    role
   }
 }

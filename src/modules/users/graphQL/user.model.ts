@@ -1,6 +1,8 @@
 import 'reflect-metadata';
-import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from 'typeorm';
-import { ObjectType, Field, Root } from 'type-graphql';
+
+import { Field, ObjectType } from 'type-graphql';
+import { BaseEntity, Column, Entity, Generated, PrimaryColumn } from 'typeorm';
+
 import { Role } from '../classes/role';
 
 /**
@@ -10,29 +12,30 @@ import { Role } from '../classes/role';
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-	@ObjectIdColumn()
-	id!: ObjectID;
+	@Generated('uuid')
+	@Column()
+	id!: number;
 
 	@Field()
 	@Column({ unique: true })
 	name!: string;
 
 	@Field()
-	@Column('firstName')
+	@Column()
 	firstName?: string;
 
 	@Field()
-	@Column('lastName')
+	@Column()
 	lastName?: string;
 
 	@Field()
-	@Column({ unique: true })
+	@PrimaryColumn({ unique: true })
 	email!: string;
 
 	@Column()
 	password!: string;
 
-	@Field()
-	@Column('role')
+	@Field(type => Role)
+	@Column()
 	role!: Role;
 }
