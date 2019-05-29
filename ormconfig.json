@@ -4,7 +4,7 @@
 	"host": "localhost",
 	"database": "backend",
 	"username": "root",
-	"password": "",
+	"password": "mysqlGastro",
 	"synchronize": true,
 	"logging": true,
 	"entities": ["./**/*.model.ts"],

@@ -22,11 +22,13 @@ export class UserResolver {
 	}
 
 	/**
-	 *
-	 * @param value
+	 * Query for searching user(s) by specific value
+	 * @param value users value for search
 	 */
 	@Query(returns => [User], { nullable: true })
-	async findUserBy(@Arg('search', type => String) value: string | Role) {
+	async findUserBy(
+		@Arg('search', type => String || Role) value: string | Role
+	) {
 		return await getRepository(User).find({
 			where: [
 				{ email: Like(value) },
@@ -36,6 +38,11 @@ export class UserResolver {
 				{ role: Like(value) }
 			]
 		});
+	}
+
+	@Query(returns => [User], { nullable: true })
+	async findByRole(@Arg('role', type => Role) value: Role) {
+		return await User.find({ role: value });
 	}
 
 	// TODO: delete when not in use

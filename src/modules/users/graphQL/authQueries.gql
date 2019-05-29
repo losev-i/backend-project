@@ -1,5 +1,12 @@
 query {
-  findResolver(search: "Lisa") {
+  findUserBy(search: "Lisa") {
+    firstName,
+    lastName,
+    role
+  }
+}
+query {
+  findByRole(role: ADMIN) {
     firstName,
     lastName,
     role
