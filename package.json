@@ -5,9 +5,7 @@
   "main": "www.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./bin/www.ts",
     "start": "nodemon ./bin/www.ts",
-    "watch-server": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/app.ts",
     "debug": "node --inspect -r ts-node/register ./bin/www.ts",
     "debug:watch": "nodemon --exec node --inspect -r ts-node/register ./bin/www.ts"
   },
