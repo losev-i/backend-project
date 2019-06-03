@@ -1,12 +1,12 @@
 {
-	"name": "default",
-	"type": "mysql",
-	"host": "localhost",
-	"database": "backend",
-	"username": "root",
-	"password": "mysqlGastro",
-	"synchronize": true,
-	"logging": true,
-	"entities": ["./**/*.model.ts"],
-	"useNewUrlParser": true
+  "name": "default",
+  "type": "mysql",
+  "host": "localhost",
+  "database": "backend",
+  "username": "root",
+  "password": "",
+  "synchronize": true,
+  "logging": true,
+  "entities": ["./**/*.model.ts"],
+  "useNewUrlParser": true
 }
