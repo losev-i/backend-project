@@ -1,10 +1,12 @@
 {
-  "name": "default",
-  "type": "mongodb",
-  "host": "localhost",
-  "database": "backend-project",
-  "synchronize": true,
-  "logging": true,
-  "entities": ["src/graphql/entities/*.*"],
-  "useNewUrlParser": true
+	"name": "default",
+	"type": "mysql",
+	"host": "localhost",
+	"database": "backend",
+	"username": "root",
+	"password": "mysqlGastro",
+	"synchronize": true,
+	"logging": true,
+	"entities": ["./**/*.model.ts"],
+	"useNewUrlParser": true
 }
