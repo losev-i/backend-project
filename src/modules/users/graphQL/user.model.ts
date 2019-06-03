@@ -1,28 +1,33 @@
 import 'reflect-metadata';
-import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from 'typeorm';
-import { ObjectType, Field, Root } from 'type-graphql';
+
+import { Field, ObjectType } from 'type-graphql';
+import { Column, Entity, Generated, PrimaryColumn } from 'typeorm';
+
+import { PlainUser } from '../../shared/plain-user-object';
 import { Role } from '../classes/role';
 
+const uuidv4 = require('uuid/v4');
 /**
  * Entity class
  * Defines the structure of User objects
  */
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
-	@ObjectIdColumn()
-	id!: ObjectID;
+export class User extends PlainUser {
+	@Generated('uuid')
+	@PrimaryColumn({ unique: true })
+	id!: string;
 
 	@Field()
 	@Column({ unique: true })
 	name!: string;
 
 	@Field()
-	@Column('firstName')
+	@Column()
 	firstName?: string;
 
 	@Field()
-	@Column('lastName')
+	@Column()
 	lastName?: string;
 
 	@Field()
@@ -32,7 +37,12 @@ export class User extends BaseEntity {
 	@Column()
 	password!: string;
 
-	@Field()
-	@Column('role')
+	@Field(type => Role)
+	@Column()
 	role!: Role;
+
+	// @BeforeInsert()
+	// addId() {
+	// 	this.id = uuidv4();
+	// }
 }

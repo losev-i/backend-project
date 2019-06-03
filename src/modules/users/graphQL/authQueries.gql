@@ -1,18 +1,14 @@
-query{
-  getUsers {
-    firstName,
-    lastName
-  }
-}
-query{
-  getUsers {
+query {
+  findUserBy(search: "Lisa") {
     firstName,
     lastName,
-    email
+    role
   }
 }
-mutation {
-  deleteUser(userName: "il") {
-    userName
+query {
+  findByRole(role: ADMIN) {
+    firstName,
+    lastName,
+    role
   }
 }

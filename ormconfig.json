@@ -1,8 +1,10 @@
 {
 	"name": "default",
-	"type": "mongodb",
+	"type": "mysql",
 	"host": "localhost",
-	"database": "backend-project",
+	"database": "backend",
+	"username": "root",
+	"password": "mysqlGastro",
 	"synchronize": true,
 	"logging": true,
 	"entities": ["./**/*.model.ts"],
