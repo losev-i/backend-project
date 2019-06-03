@@ -29,6 +29,7 @@ export class UserResolver {
   async findUserBy(
     @Arg("search", type => String || Role) value: string | Role
   ) {
+    // Like ersetzen bei lastName und firstName da case-sensitivity relevant?
     return await User.find({
       where: [
         { email: Like(value) },
