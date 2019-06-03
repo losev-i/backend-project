@@ -47,6 +47,7 @@
     "lodash": "^4.17.11",
     "mongoose": "^5.5.10",
     "proxyquire": "^2.1.0",
+    "redux": "^4.0.1",
     "reflect-metadata": "^0.1.13",
     "sinon": "^7.3.2",
     "tsc": "^1.20150623.0",
