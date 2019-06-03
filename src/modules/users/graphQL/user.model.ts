@@ -14,35 +14,35 @@ const uuidv4 = require('uuid/v4');
 @ObjectType()
 @Entity()
 export class User extends PlainUser {
-	@Generated('uuid')
-	@PrimaryColumn({ unique: true })
-	id!: string;
+  @Generated('uuid')
+  @PrimaryColumn({ unique: true })
+  id!: string;
 
-	@Field()
-	@Column({ unique: true })
-	name!: string;
+  @Field()
+  @Column({ unique: true })
+  name!: string;
 
-	@Field()
-	@Column()
-	firstName?: string;
+  @Field()
+  @Column()
+  firstName?: string;
 
-	@Field()
-	@Column()
-	lastName?: string;
+  @Field()
+  @Column()
+  lastName?: string;
 
-	@Field()
-	@Column({ unique: true })
-	email!: string;
+  @Field()
+  @Column({ unique: true })
+  email!: string;
 
-	@Column()
-	password!: string;
+  @Column()
+  password!: string;
 
-	@Field(type => Role)
-	@Column()
-	role!: Role;
+  @Field(type => Role)
+  @Column()
+  role!: Role;
 
-	// @BeforeInsert()
-	// addId() {
-	// 	this.id = uuidv4();
-	// }
+  // @BeforeInsert()
+  // addId() {
+  // 	this.id = uuidv4();
+  // }
 }

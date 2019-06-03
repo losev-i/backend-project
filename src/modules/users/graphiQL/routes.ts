@@ -6,13 +6,13 @@ const graphqlHTTP = require('koa-graphql');
 export const router = new Router();
 
 async function asyncRouter() {
-	router.all(
-		'/',
-		graphqlHTTP({
-			schema: await RootSchema(),
-			graphiql: process.env.NODE_ENV !== 'production'
-		})
-	);
+  router.all(
+    '/',
+    graphqlHTTP({
+      schema: await RootSchema(),
+      graphiql: process.env.NODE_ENV !== 'production'
+    })
+  );
 }
 
 asyncRouter();
