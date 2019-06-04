@@ -4,7 +4,7 @@
   "description": "Backend server foundation.",
   "main": "www.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tsc && ava --verbose",
     "start": "nodemon ./bin/www.ts",
     "debug": "node --inspect -r ts-node/register ./bin/www.ts",
     "debug:watch": "nodemon --exec node --inspect -r ts-node/register ./bin/www.ts"
@@ -47,7 +47,11 @@
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-mount": "^3.0.1",
     "@types/koa-router": "^7.0.40",
+    "@types/supertest": "^2.0.7",
+    "ava": "^2.0.0",
+    "get-port": "^5.0.0",
     "nodemon": "^1.19.1",
+    "supertest": "^4.0.2",
     "ts-node": "^8.1.0",
     "tsc": "^1.20150623.0",
     "typedoc": "^0.14.2",
