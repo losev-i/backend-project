@@ -31,8 +31,9 @@ _test.beforeEach(async t => {
   };
 });
 
-_test('GET: /', async t => {
+_test.skip('GET: /', async t => {
   const request = t.context.request;
   const result = await request.get('/').expect(200);
+
   t.is(result.type, 'application/json');
 });
