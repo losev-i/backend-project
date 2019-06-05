@@ -4,10 +4,11 @@
   "description": "Backend server foundation.",
   "main": "www.ts",
   "scripts": {
-    "test": "tsc && ava --verbose",
     "start": "nodemon ./bin/www.ts",
     "debug": "node --inspect -r ts-node/register ./bin/www.ts",
-    "debug:watch": "nodemon --exec node --inspect -r ts-node/register ./bin/www.ts"
+    "debug:watch": "nodemon --exec node --inspect -r ts-node/register ./bin/www.ts",
+    "db:setup": "ts-node ./src//modules/shared/test-utils/setup.ts",
+    "test": "npm run db:setup && ava"
   },
   "repository": {
     "type": "git",
