@@ -1,6 +1,6 @@
 import { createConnection } from 'typeorm';
 
-export const testConn = (drop: boolean = false) => {
+export const testConnection = (drop: boolean = false) => {
   return createConnection({
     name: 'default',
     type: 'mysql',

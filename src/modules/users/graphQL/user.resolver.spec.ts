@@ -1,5 +1,5 @@
 import test from 'ava';
-import { testConn } from '../../shared/test-utils/test-connection';
+import { testConnection } from '../../shared/test-utils/test-connection';
 import { Connection } from 'typeorm';
 import { call } from '../../shared/test-utils/call.graphql';
 import { ExecutionResult } from 'graphql';
@@ -7,7 +7,7 @@ import { ExecutionResultDataDefault } from 'graphql/execution/execute';
 
 let conn: Connection;
 test.before(async () => {
-  conn = await testConn();
+  conn = await testConnection();
 });
 
 test.after(async () => {
@@ -31,6 +31,8 @@ const registerMutation = `mutation {
   }
 }
 `;
+
+// TODO: insert variables for user data, may have to change resolver
 
 test('user: register', async t => {
   const expected = await call({
