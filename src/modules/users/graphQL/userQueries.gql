@@ -1,45 +1,46 @@
 mutation {
-  register(data: {
+  register(
     firstName: "Inna", 
     lastName: "Losev", 
     email: "i515@ev.de", 
-    userName: "il", 
+    name: "il", 
     password: "12345", 
-    role: ADMIN}) {
-    firstName,
-    lastName,
-    email,
-    userName,
+    role: "ADMIN") {
+    firstName
+    lastName
+    email
+    name
     role
   }
-},
+}
+,
 mutation {
-  register(data: {
+  register(
     firstName: "Leon", 
     lastName: "Meister", 
     email: "lm@dev.de", 
-    userName: "lmeister", 
+    name: "lmeister", 
     password: "23456", 
-    role: USER}) {
+    role: "USER") {
     firstName,
     lastName,
     email,
-    userName,
+    name,
     role
   }
 },
 mutation {
-  register(data: {
+  register(
     firstName: "Rene", 
     lastName: "Springer", 
     email: "rs@dev.de", 
-    userName: "rspringer", 
+    name: "rspringer", 
     password: "34567", 
-    role: GUEST}) {
+    role: "GUEST") {
     firstName,
     lastName,
     email,
-    userName,
+    name,
     role
   }
 }

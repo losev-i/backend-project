@@ -1,3 +1,3 @@
-import { testConn } from './testConn';
+import { testConn } from './test-connection';
 
 testConn(true).then(() => process.exit());

@@ -1,12 +1,12 @@
-// import test from 'ava';
-// import { stub, spy } from 'sinon';
-// import proxyquire from 'proxyquire';
-// import faker from 'faker';
-// import { PlainUser } from '../../shared/plain-user-object';
-// import { Role } from '../classes/role';
+// import test from "ava";
+// import { stub, spy } from "sinon";
+// import proxyquire from "proxyquire";
+// import faker from "faker";
+// import { PlainUser } from "../../shared/plain-user-object";
+// import { Role } from "../classes/role";
 
 // const testUser = new PlainUser();
-// testUser.id = '1';
+// testUser.id = "1";
 // testUser.name = faker.internet.userName();
 // testUser.password = faker.internet.password();
 // testUser.email = faker.internet.email();
@@ -22,17 +22,15 @@
 //   }
 // };
 
-// const mw = proxyquire('./user.resolver', { './user.model': UserModelMock });
+// const mw = proxyquire("./user.resolver", { "./user.model": UserModelMock });
 
-// test('find users', async t => {
+// test("find users", async t => {
 //   const ctx: { body: any } = { body: null };
-//   const userFindSpy = spy(UserModelMock, 'findUsers');
+//   const userFindSpy = spy(UserModelMock, "findUsers");
 
 //   const next = stub().returns(Promise.resolve());
 
 //   const response = await mw.findUsers;
-
-//   console.log(response);
 
 //   t.truthy(userFindSpy.called);
 //   t.deepEqual(ctx.body, testUsers);
@@ -40,8 +38,11 @@
 // });
 
 import test from 'ava';
-import { testConn } from '../../shared/test-utils/testConn';
+import { testConn } from '../../shared/test-utils/test-connection';
 import { Connection } from 'typeorm';
+import { call } from '../../shared/test-utils/call.graphql';
+import { ExecutionResult } from 'graphql';
+import { ExecutionResultDataDefault } from 'graphql/execution/execute';
 
 let conn: Connection;
 test.before(async () => {
@@ -50,4 +51,42 @@ test.before(async () => {
 
 test.after(async () => {
   await conn.close();
+});
+
+const registerMutation = `mutation {
+  register(
+    firstName: "Inna",
+    lastName: "Losev",
+    email: "i515@ev.de",
+    name: "il",
+    password: "12345",
+    role: "ADMIN"
+    )  {
+    firstName
+    lastName
+    email
+    name
+    role
+  }
+}
+`;
+
+test('user: register', async t => {
+  const expected = await call({
+    source: registerMutation
+  });
+
+  let actual: ExecutionResult<ExecutionResultDataDefault> = {
+    data: {
+      register: {
+        firstName: 'Inna',
+        lastName: 'Losev',
+        email: 'i515@ev.de',
+        name: 'il',
+        role: 'ADMIN'
+      }
+    }
+  };
+
+  t.deepEqual(actual, expected);
 });
