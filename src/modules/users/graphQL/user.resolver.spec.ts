@@ -6,6 +6,7 @@ import { ExecutionResult } from 'graphql';
 import faker from 'faker';
 import { ExecutionResultDataDefault } from 'graphql/execution/execute';
 import { Role } from '../classes/role';
+import { PlainUserInterface } from '../../shared/plain-user-object';
 
 let conn: Connection;
 test.before(async () => {
@@ -16,8 +17,9 @@ test.after(async () => {
   await conn.close();
 });
 
-function createUser(role: Role) {
+function createUser(role: Role): PlainUserInterface {
   let user = {
+    id: faker.random.uuid(),
     name: faker.internet.userName(),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
@@ -28,7 +30,7 @@ function createUser(role: Role) {
   return user;
 }
 
-function registerMutationConstructor(user: any) {
+function registerMutationConstructor(user: PlainUserInterface) {
   let registerMutation = `mutation {
     register(
       name: ${JSON.stringify(user.name)},
@@ -50,7 +52,7 @@ function registerMutationConstructor(user: any) {
   return registerMutation;
 }
 
-function registerResultConstructor(user: any) {
+function registerResultConstructor(user: PlainUserInterface) {
   let registerResult: ExecutionResult<ExecutionResultDataDefault> = {
     data: {
       register: {
@@ -110,7 +112,7 @@ function findQueryConstructor(searchCriteria: string) {
   return findQuery;
 }
 
-function findResultConstructor(user: any) {
+function findResultConstructor(user: PlainUserInterface) {
   const findResult: ExecutionResult<ExecutionResultDataDefault> = {
     data: {
       findUserBy: [
