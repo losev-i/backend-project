@@ -5,6 +5,8 @@ import { call } from '../../shared/test-utils/call.graphql';
 import { ExecutionResult } from 'graphql';
 import faker from 'faker';
 import { ExecutionResultDataDefault } from 'graphql/execution/execute';
+import { Role } from '../classes/role';
+import { PlainUser } from '../../shared/plain-user-object';
 
 let conn: Connection;
 test.before(async () => {
@@ -15,25 +17,27 @@ test.after(async () => {
   await conn.close();
 });
 
-let registerMutation: string;
-let actual: ExecutionResult<ExecutionResultDataDefault>;
+function createUser(role: Role) {
+  let user = {
+    name: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    role: role
+  };
+  return user;
+}
 
-test.beforeEach(() => {
-  const name = faker.internet.userName();
-  const firstName = faker.name.firstName();
-  const lastName = faker.name.lastName();
-  const email = faker.internet.email();
-  const password = faker.internet.password();
-  const role = 'USER';
-
-  registerMutation = `mutation {
+function registerMutationConstructor(user: any) {
+  let registerMutation = `mutation {
     register(
-      name: ${JSON.stringify(name)},
-      firstName: ${JSON.stringify(firstName)},
-      lastName: ${JSON.stringify(lastName)},
-      email: ${JSON.stringify(email)},
-      password: ${JSON.stringify(password)},
-      role: ${JSON.stringify(role)} 
+      name: ${JSON.stringify(user.name)},
+      firstName: ${JSON.stringify(user.firstName)},
+      lastName: ${JSON.stringify(user.lastName)},
+      email: ${JSON.stringify(user.email)},
+      password: ${JSON.stringify(user.password)},
+      role: ${JSON.stringify(user.role)} 
       )  {
       name
       firstName
@@ -44,23 +48,97 @@ test.beforeEach(() => {
   }
   `;
 
-  actual = {
+  return registerMutation;
+}
+
+function registerResultConstructor(user: any) {
+  let registerResult: ExecutionResult<ExecutionResultDataDefault> = {
     data: {
       register: {
-        name: name,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        role: role
+        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role
       }
     }
   };
-});
+  return registerResult;
+}
 
 test('user: register', async t => {
+  let role: Role = Role.ADMIN;
+  let testUser = createUser(role);
+  let registerMutation = registerMutationConstructor(testUser);
+  let registerResult = registerResultConstructor(testUser);
+
   const expected = await call({
     source: registerMutation
   });
 
-  t.deepEqual(actual, expected);
+  t.deepEqual(registerResult, expected);
+});
+
+test('user: register fail', async t => {
+  let role: Role = Role.ADMIN;
+  let testUser = createUser(role);
+  let registerMutation = registerMutationConstructor(testUser);
+  let registerResult = registerResultConstructor(testUser);
+
+  const expected = await call({
+    source: registerMutation
+  });
+
+  if (registerResult.data) {
+    registerResult.data.register.role = Role.GUEST;
+  }
+
+  t.notDeepEqual(registerResult, expected);
+});
+
+// findQuery constructor
+function findQueryConstructor(searchCriteria: string) {
+  const findQuery = `{
+    findUserBy(search: ${JSON.stringify(searchCriteria)}) {
+      name
+      firstName
+      lastName
+      email
+      role
+    }
+  }
+  `;
+  return findQuery;
+}
+
+function findResultConstructor(user: any) {
+  const findResult: ExecutionResult<ExecutionResultDataDefault> = {
+    data: {
+      findUserBy: [
+        {
+          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          role: user.role
+        }
+      ]
+    }
+  };
+  return findResult;
+}
+
+test('user: findUserByRole', async t => {
+  let role: Role = Role.GUEST;
+  let testUser = createUser(role);
+  let registerMutation = registerMutationConstructor(testUser);
+
+  await call({ source: registerMutation });
+
+  const findQuery = findQueryConstructor(role);
+  const findResult = findResultConstructor(testUser);
+
+  const expected = await call({ source: findQuery });
+
+  t.deepEqual(findResult, expected);
 });
