@@ -2,7 +2,7 @@ import test from 'ava';
 import { testConnection } from '../../shared/test-utils/test-connection';
 import { Connection } from 'typeorm';
 import { call } from '../../shared/test-utils/call.graphql';
-import { ExecutionResult } from 'graphql';
+import { ExecutionResult, GraphQLError } from 'graphql';
 import faker from 'faker';
 import { ExecutionResultDataDefault } from 'graphql/execution/execute';
 import { Role } from '../classes/role';
@@ -97,7 +97,28 @@ test('user: register fail', async t => {
   t.notDeepEqual(registerResult, expected);
 });
 
-// findQuery constructor
+test('user: register throw dublicate error', async t => {
+  let role: Role = Role.ADMIN;
+  let testUser1 = createUser(role);
+  let registerMutation = registerMutationConstructor(testUser1);
+
+  await call({ source: registerMutation });
+
+  let testUser2 = createUser(role);
+  testUser2.name = testUser1.name;
+
+  registerMutation = registerMutationConstructor(testUser2);
+  const expected = await call({ source: registerMutation });
+
+  const empty: ExecutionResult<ExecutionResultDataDefault> = {
+    data: {
+      register: null
+    }
+  };
+
+  t.deepEqual(empty.data, expected.data);
+});
+
 function findQueryConstructor(searchCriteria: string) {
   const findQuery = `{
     findUserBy(search: ${JSON.stringify(searchCriteria)}) {
