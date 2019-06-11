@@ -6,7 +6,6 @@ import { ExecutionResult } from 'graphql';
 import faker from 'faker';
 import { ExecutionResultDataDefault } from 'graphql/execution/execute';
 import { Role } from '../classes/role';
-import { PlainUser } from '../../shared/plain-user-object';
 
 let conn: Connection;
 test.before(async () => {
