@@ -40,8 +40,13 @@ const registerMutation = `mutation Register($data: registerInput!) {
 }
   `;
 
-function registerResultConstructor(user: any) {
-  let registerResult: ExecutionResult<ExecutionResultDataDefault> = {
+/*
+@param value: what the test result should be
+@param expected: what the test result actually is
+*/
+
+function registerValueConstructor(user: any) {
+  let value: ExecutionResult<ExecutionResultDataDefault> = {
     data: {
       register: {
         name: user.name,
@@ -52,12 +57,12 @@ function registerResultConstructor(user: any) {
       }
     }
   };
-  return registerResult;
+  return value;
 }
 
 test('user: register: successful', async t => {
   let testUser = createUser(Role.ADMIN);
-  let registerResult = registerResultConstructor(testUser);
+  let value = registerValueConstructor(testUser);
 
   const expected = await call({
     source: registerMutation,
@@ -66,13 +71,13 @@ test('user: register: successful', async t => {
     }
   });
 
-  t.deepEqual(registerResult, expected);
+  t.deepEqual(value, expected);
 });
 
 test('user: register: fail', async t => {
   let role: Role = Role.ADMIN;
   let testUser = createUser(role);
-  let registerResult = registerResultConstructor(testUser);
+  let value = registerValueConstructor(testUser);
 
   const expected = await call({
     source: registerMutation,
@@ -81,16 +86,16 @@ test('user: register: fail', async t => {
     }
   });
 
-  if (registerResult.data) {
-    registerResult.data.register.role = Role.GUEST;
+  if (value.data) {
+    value.data.register.role = Role.GUEST;
   }
 
-  t.notDeepEqual(registerResult, expected);
+  t.notDeepEqual(value, expected);
 });
 
 // TODO: error verification is bad, empty result could have other
 // possible results besides dublicate error
-test.skip('user: register: throw dublicate error', async t => {
+test('user: register: duplicate name error', async t => {
   let role: Role = Role.ADMIN;
   let testUser1 = createUser(role);
 
@@ -111,14 +116,15 @@ test.skip('user: register: throw dublicate error', async t => {
     }
   });
 
-  const empty: ExecutionResult<ExecutionResultDataDefault> = {
-    data: undefined
-  };
+  // TODO: need to change if clause, else might not run test
+  // maybe initialize expected beforehand
 
-  t.deepEqual(empty.data, expected.data);
+  if (expected.errors) {
+    t.regex(expected.errors[0].message, /Duplicate entry/);
+  }
 });
 
-test.skip('user: register: Syntax error: empty string for name', async t => {
+test('user: register: Argument Validation Error: empty string for name', async t => {
   let role: Role = Role.ADMIN;
   let testUser = createUser(role);
   testUser.name = '';
@@ -131,8 +137,9 @@ test.skip('user: register: Syntax error: empty string for name', async t => {
   });
 
   // TODO: need to change if clause, else might not run test
+  // maybe initialize expected beforehand
   if (expected.errors) {
-    t.regex(expected.errors[0].message, /Syntax Error/);
+    t.regex(expected.errors[0].message, /Argument Validation Error/);
   }
 });
 
@@ -150,8 +157,8 @@ function findQueryConstructor(searchCriteria: string) {
   return findQuery;
 }
 
-function findResultConstructor(user: any) {
-  const findResult: ExecutionResult<ExecutionResultDataDefault> = {
+function findValueConstructor(user: any) {
+  const value: ExecutionResult<ExecutionResultDataDefault> = {
     data: {
       findUserBy: [
         {
@@ -164,7 +171,7 @@ function findResultConstructor(user: any) {
       ]
     }
   };
-  return findResult;
+  return value;
 }
 
 test('user: findUsers: Role', async t => {
@@ -178,9 +185,9 @@ test('user: findUsers: Role', async t => {
   });
 
   const findQuery = findQueryConstructor(Role.GUEST);
-  const findResult = findResultConstructor(testUser);
+  const value = findValueConstructor(testUser);
 
   const expected = await call({ source: findQuery });
 
-  t.deepEqual(findResult, expected);
+  t.deepEqual(value, expected);
 });
