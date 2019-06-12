@@ -2,11 +2,10 @@ import test from 'ava';
 import { testConnection } from '../../shared/test-utils/test-connection';
 import { Connection } from 'typeorm';
 import { call } from '../../shared/test-utils/call.graphql';
-import { ExecutionResult, GraphQLError } from 'graphql';
+import { ExecutionResult } from 'graphql';
 import faker from 'faker';
 import { ExecutionResultDataDefault } from 'graphql/execution/execute';
 import { Role } from '../classes/role';
-import { PlainUserInterface } from '../../shared/plain-user-object';
 
 let conn: Connection;
 test.before(async () => {
@@ -17,42 +16,31 @@ test.after(async () => {
   await conn.close();
 });
 
-function createUser(role: Role): PlainUserInterface {
+function createUser(role?: Role) {
   let user = {
-    id: faker.random.uuid(),
-    name: faker.internet.userName(),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
+    name: faker.internet.userName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
-    role: role
+    role: role ? role : Role.GUEST
   };
   return user;
 }
-
-function registerMutationConstructor(user: PlainUserInterface) {
-  let registerMutation = `mutation {
-    register(
-      name: ${JSON.stringify(user.name)},
-      firstName: ${JSON.stringify(user.firstName)},
-      lastName: ${JSON.stringify(user.lastName)},
-      email: ${JSON.stringify(user.email)},
-      password: ${JSON.stringify(user.password)},
-      role: ${JSON.stringify(user.role)} 
-      )  {
-      name
-      firstName
-      lastName
-      email
-      role
-    }
+const registerMutation = `mutation Register($data: registerInput!) {
+  register(
+    data: $data
+  ) {
+    name
+    firstName
+    lastName
+    email
+    role
   }
+}
   `;
 
-  return registerMutation;
-}
-
-function registerResultConstructor(user: PlainUserInterface) {
+function registerResultConstructor(user: any) {
   let registerResult: ExecutionResult<ExecutionResultDataDefault> = {
     data: {
       register: {
@@ -67,27 +55,30 @@ function registerResultConstructor(user: PlainUserInterface) {
   return registerResult;
 }
 
-test('user: register', async t => {
-  let role: Role = Role.ADMIN;
-  let testUser = createUser(role);
-  let registerMutation = registerMutationConstructor(testUser);
+test('user: register: successful', async t => {
+  let testUser = createUser(Role.ADMIN);
   let registerResult = registerResultConstructor(testUser);
 
   const expected = await call({
-    source: registerMutation
+    source: registerMutation,
+    variableValues: {
+      data: testUser
+    }
   });
 
   t.deepEqual(registerResult, expected);
 });
 
-test('user: register fail', async t => {
+test('user: register: fail', async t => {
   let role: Role = Role.ADMIN;
   let testUser = createUser(role);
-  let registerMutation = registerMutationConstructor(testUser);
   let registerResult = registerResultConstructor(testUser);
 
   const expected = await call({
-    source: registerMutation
+    source: registerMutation,
+    variableValues: {
+      data: testUser
+    }
   });
 
   if (registerResult.data) {
@@ -97,26 +88,52 @@ test('user: register fail', async t => {
   t.notDeepEqual(registerResult, expected);
 });
 
-test('user: register throw dublicate error', async t => {
+// TODO: error verification is bad, empty result could have other
+// possible results besides dublicate error
+test.skip('user: register: throw dublicate error', async t => {
   let role: Role = Role.ADMIN;
   let testUser1 = createUser(role);
-  let registerMutation = registerMutationConstructor(testUser1);
 
-  await call({ source: registerMutation });
+  await call({
+    source: registerMutation,
+    variableValues: {
+      data: testUser1
+    }
+  });
 
   let testUser2 = createUser(role);
   testUser2.name = testUser1.name;
 
-  registerMutation = registerMutationConstructor(testUser2);
-  const expected = await call({ source: registerMutation });
+  const expected = await call({
+    source: registerMutation,
+    variableValues: {
+      data: testUser2
+    }
+  });
 
   const empty: ExecutionResult<ExecutionResultDataDefault> = {
-    data: {
-      register: null
-    }
+    data: undefined
   };
 
   t.deepEqual(empty.data, expected.data);
+});
+
+test.skip('user: register: Syntax error: empty string for name', async t => {
+  let role: Role = Role.ADMIN;
+  let testUser = createUser(role);
+  testUser.name = '';
+
+  const expected = await call({
+    source: registerMutation,
+    variableValues: {
+      data: testUser
+    }
+  });
+
+  // TODO: need to change if clause, else might not run test
+  if (expected.errors) {
+    t.regex(expected.errors[0].message, /Syntax Error/);
+  }
 });
 
 function findQueryConstructor(searchCriteria: string) {
@@ -133,7 +150,7 @@ function findQueryConstructor(searchCriteria: string) {
   return findQuery;
 }
 
-function findResultConstructor(user: PlainUserInterface) {
+function findResultConstructor(user: any) {
   const findResult: ExecutionResult<ExecutionResultDataDefault> = {
     data: {
       findUserBy: [
@@ -150,14 +167,17 @@ function findResultConstructor(user: PlainUserInterface) {
   return findResult;
 }
 
-test('user: findUserByRole', async t => {
-  let role: Role = Role.GUEST;
-  let testUser = createUser(role);
-  let registerMutation = registerMutationConstructor(testUser);
+test('user: findUsers: Role', async t => {
+  let testUser = createUser(Role.GUEST);
 
-  await call({ source: registerMutation });
+  await call({
+    source: registerMutation,
+    variableValues: {
+      data: testUser
+    }
+  });
 
-  const findQuery = findQueryConstructor(role);
+  const findQuery = findQueryConstructor(Role.GUEST);
   const findResult = findResultConstructor(testUser);
 
   const expected = await call({ source: findQuery });

@@ -1,11 +1,13 @@
 mutation {
   register(
+    data: {
     firstName: "Inna", 
     lastName: "Losev", 
     email: "i515@ev.de", 
     name: "il", 
     password: "12345", 
-    role: "ADMIN") {
+    role: "ADMIN"}) 
+  {
     firstName
     lastName
     email
@@ -15,32 +17,35 @@ mutation {
 }
 ,
 mutation {
-  register(
+  register( 
+    data:{
     firstName: "Leon", 
-    lastName: "Meister", 
+    lastName: "Meister",
+    name: "lmeister",
     email: "lm@dev.de", 
-    name: "lmeister", 
     password: "23456", 
-    role: "USER") {
+    role: "USER"}) 
+  {
     firstName,
     lastName,
     email,
     name,
     role
-  }
-},
-mutation {
-  register(
-    firstName: "Rene", 
-    lastName: "Springer", 
-    email: "rs@dev.de", 
-    name: "rspringer", 
-    password: "34567", 
-    role: "GUEST") {
-    firstName,
-    lastName,
-    email,
-    name,
+    }
+  },
+mutation{
+  register(data:{
+    firstName: "Rene"
+    lastName: "Springer"
+    name: ""
+    password: "12345"
+    email: "rs@wrk.com"
+    role: "GUEST"
+  }){
+    name
+    firstName
+    lastName
+    email
     role
   }
 }

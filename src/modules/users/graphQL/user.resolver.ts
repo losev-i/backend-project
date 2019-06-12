@@ -6,6 +6,7 @@ import { getRepository, Like } from 'typeorm';
 
 import { User } from './user.model';
 import { Role } from '../classes/role';
+import { registerInput } from './registerInput';
 
 /**
  * Resolver class
@@ -46,15 +47,16 @@ export class UserResolver {
   }
 
   // TODO: delete when not in use
-  @Mutation(returns => User, { nullable: true })
-  async register(
-    @Arg('firstName') firstName: string,
-    @Arg('lastName') lastName: string,
-    @Arg('password') password: string,
-    @Arg('email') email: string,
-    @Arg('name') name: string,
-    @Arg('role') role: Role
-  ) {
+  @Mutation(() => User)
+  async register(@Arg('data')
+  {
+    firstName,
+    lastName,
+    name,
+    email,
+    password,
+    role
+  }: registerInput): Promise<User> {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await User.create({
