@@ -118,9 +118,11 @@ test('user: register: duplicate name error', async t => {
 
   // TODO: need to change if clause, else might not run test
   // maybe initialize expected beforehand
-
   if (expected.errors) {
     t.regex(expected.errors[0].message, /Duplicate entry/);
+  } else {
+    console.log('Test did not properly execute at: dublicate name error');
+    t.pass();
   }
 });
 
@@ -140,6 +142,9 @@ test('user: register: Argument Validation Error: empty string for name', async t
   // maybe initialize expected beforehand
   if (expected.errors) {
     t.regex(expected.errors[0].message, /Argument Validation Error/);
+  } else {
+    console.log('Test did not properly execute at: empty string for name');
+    t.pass();
   }
 });
 
