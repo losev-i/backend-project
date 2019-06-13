@@ -18,7 +18,7 @@ mutation {
 ,
 mutation {
   register( 
-    data:{
+    data: {
     firstName: "Leon", 
     lastName: "Meister",
     name: "lmeister",
@@ -33,15 +33,15 @@ mutation {
     role
     }
   },
-mutation{
-  register(data:{
-    firstName: "Rene"
-    lastName: "Springer"
-    name: ""
-    password: "12345"
-    email: "rs@wrk.com"
-    role: "GUEST"
-  }){
+mutation {
+  register(
+    data: {
+      firstName: "Rene", 
+      lastName: "Springer", 
+      name: "rspringer", 
+      password: "12345", 
+      email: "rs@wrk.com", 
+      role: "GUEST"}) {
     name
     firstName
     lastName
